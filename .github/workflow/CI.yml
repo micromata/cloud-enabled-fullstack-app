@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      -main
+
+jobs:
+  test:
+
+    name: test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        component: ['frontend', 'backend']
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: run tests
+        run: mvn test
+
