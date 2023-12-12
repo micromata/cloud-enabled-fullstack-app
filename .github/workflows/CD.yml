@@ -49,12 +49,17 @@ jobs:
 
     strategy:
       matrix:
-        component: ["${{ secrets.FRONTEND_SERVICE_ID }}", "${{ secrets.BACKEND_SERVICE_ID }}"]
+        component: ["frontend", "backend"]
+        include:
+          - component: frontend
+            secret_path: FRONTEND_SERVICE_ID
+          - component: backend
+            secret_path: BACKEND_SERVICE_ID
 
     steps:
       - name: Deploy to Render
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          service-id: ${{ matrix.component }}
+          service-id: ${{ secrets[matrix.secret_path] }}
           api-key: ${{ secrets.RENDER_API_KEY }}
           wait-for-success: true
