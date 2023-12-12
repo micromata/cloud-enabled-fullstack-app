@@ -44,6 +44,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   deploy:
+    needs:
+      - build
     name: Deploy to Render
     runs-on: ubuntu-latest
 
