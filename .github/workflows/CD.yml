@@ -49,7 +49,7 @@ jobs:
 
     strategy:
       matrix:
-        component: [${{ secrets.FRONTEND_SERVICE_ID }}, ${{ secrets.BACKEND_SERVICE_ID }}]
+        component: ["${{ secrets.FRONTEND_SERVICE_ID }}", "${{ secrets.BACKEND_SERVICE_ID }}"]
 
     steps:
       - name: Deploy to Render
