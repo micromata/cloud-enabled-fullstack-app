@@ -43,3 +43,18 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  deploy:
+    name: Deploy to Render
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service: [${{ secrets.FRONTEND_SERVICE_ID }}, ${{ secrets.BACKEND_SERVICE_ID }}]
+
+    steps:
+      - name: Deploy to Render
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ matrix.service }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
+          wait-for-success: true
