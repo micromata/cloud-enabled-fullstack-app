@@ -49,12 +49,12 @@ jobs:
 
     strategy:
       matrix:
-        service: [${{ secrets.FRONTEND_SERVICE_ID }}, ${{ secrets.BACKEND_SERVICE_ID }}]
+        component: [${{ secrets.FRONTEND_SERVICE_ID }}, ${{ secrets.BACKEND_SERVICE_ID }}]
 
     steps:
       - name: Deploy to Render
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          service-id: ${{ matrix.service }}
+          service-id: ${{ matrix.component }}
           api-key: ${{ secrets.RENDER_API_KEY }}
           wait-for-success: true
