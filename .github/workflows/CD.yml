@@ -10,9 +10,13 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  test:
+    uses: "./.github/workflows/CI.yml"
   build:
     name: Build Dockerimage
     runs-on: ubuntu-latest
+    needs:
+      - test
 
     permissions:
       contents: read

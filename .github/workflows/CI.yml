@@ -2,19 +2,13 @@ name: CI
 
 on:
   workflow_dispatch:
+  workflow_call:
   pull_request:
-    branches:
-      -main
 
 jobs:
-  test:
-
-    name: test
+  test-backend:
+    name: Test Backend
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        component: ['frontend', 'backend']
 
     steps:
       - name: checkout repo
@@ -27,8 +21,29 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
+        working-directory: ./backend
         run: mvn clean install
 
-      - name: run tests
+      - name: Run Tests
+        working-directory: ./backend
         run: mvn test
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm ci
+        working-directory: ./frontend
+
+      - name: Run Tests
+        run: npm run test
+        working-directory: ./frontend
