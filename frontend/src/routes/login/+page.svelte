@@ -1,31 +1,25 @@
-<script>
-    import sendToBackend from './+page.server.ts';
-
-    let username = '';
-    let password = '';
-
-    const sendDataToBackend = async () => {
-        const data = { username, password };
-
-        try {
-            const result = await sendToBackend(data);
-            console.log(result);
-        } catch (error) {
-            console.error('Fehler beim Senden der Daten:', error);
-        }
-    };
-</script>
-
-<div class="place-content-center">
-    <card class="w-4/5 bg-amber-300">
-        <div class="flex-col">
-            <label class="text-center block">Benutzername
-                <input class="mx-auto block border-2" bind:value={username}>
+<div class="flex items-center pb-80 justify-center h-screen">
+    <form method="post" class="w-full max-w-md bg-white shadow-md rounded-md p-6">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-semibold mb-2">
+                Benutzername
             </label>
-            <label class="text-center block">Passwort
-                <input class="mx-auto block border-2" bind:value={password}>
-            </label>
-            <button class="mx-auto block rounded-full" on:click="{sendDataToBackend}">Einloggen</button>
+            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type="text">
         </div>
-    </card>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-semibold mb-2">
+                Passwort
+            </label>
+            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type="password">
+        </div>
+
+        <button class="w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none" type="submit">
+            Einloggen
+        </button>
+        <div class="pt-3">
+            <a>Don't have an Account? Create one</a> <a href="../register" class="text-blue-700 underline">here</a>
+        </div>
+
+    </form>
 </div>
