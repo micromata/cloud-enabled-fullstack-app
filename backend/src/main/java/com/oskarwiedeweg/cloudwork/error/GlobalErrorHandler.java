@@ -1,6 +1,7 @@
 package com.oskarwiedeweg.cloudwork.error;
 
 import com.oskarwiedeweg.cloudwork.error.dto.ErrorDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +13,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalErrorHandler {
 
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<ErrorDto> handleError(Throwable throwable) {
         if (!(throwable instanceof ErrorResponse errorResponse)) {
+            log.error("An error occurred! ",throwable);
             return construct(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         }
         return construct(errorResponse.getStatusCode(),
