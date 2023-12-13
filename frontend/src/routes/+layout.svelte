@@ -2,5 +2,8 @@
     import "../main.css"
 </script>
 
-<p class="text-pink-50">Hallo</p>
+<nav class="mx-auto">
+    <a href="/">Home</a>
+    <a href="/login">login</a>
+</nav>
 <slot></slot>
