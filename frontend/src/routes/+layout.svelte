@@ -12,7 +12,7 @@
     <a href="/" class="text-blue-700 mx-4 hover:text-blue-500">Home</a>
     <a href="/" class="text-blue-700 mx-4 hover:text-blue-500">News</a>
     <a href="/" class="text-blue-700 mx-4 hover:text-blue-500">PlaceHolder</a>
-    <a href="/login" class="text-blue-700 mx-4 hover:text-blue-500 ml-auto">Login</a>
+    <a href="/login" class="text-blue-700 mx-4 hover:text-blue-500 ml-auto">Sign In</a>
     <div class="relative ml-3 pr-5">
         <div>
             <button
