@@ -3,14 +3,14 @@
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-semibold mb-2">
                 Username
-                <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type="text">
+                <input name="username" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type="text">
             </label>
         </div>
 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-semibold mb-2">
                 Password
-                <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type="password">
+                <input name="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type="password">
             </label>
         </div>
 
