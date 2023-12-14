@@ -22,6 +22,6 @@ export const actions:Actions = {
 
         console.log(response.status)
 
-        setCookie(response, cookies);
+        await setCookie(response, cookies);
     }
 }
