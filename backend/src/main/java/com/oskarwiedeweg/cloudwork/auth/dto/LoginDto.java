@@ -6,10 +6,10 @@ import lombok.Data;
 @Data
 public class LoginDto {
 
-    @NotBlank
+    @NotBlank(message = "Is empty.")
     private final String username;
 
-    @NotBlank
+    @NotBlank(message = "Is empty.")
     private final String password;
 
 }

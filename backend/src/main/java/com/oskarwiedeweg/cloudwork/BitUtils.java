@@ -10,13 +10,18 @@ public class BitUtils {
         return (bits & bit) == bit;
     }
 
-    public static Long addBit(Long bits, Long bit) {
+    public Long addBit(Long bits, Long bit) {
         return bits | bit;
+    }
+
+    public Long removeBit(Long bits, Long bit) {
+        return bits & ~bit;
     }
 
     @Getter
     public enum SettingBits {
-        TWO_FACTOR_AUTH(1);
+        TWO_FACTOR_AUTH(1),
+        SETUP_TWO_FACTOR_AUTH(2);
 
         private final long bit;
 
