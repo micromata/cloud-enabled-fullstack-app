@@ -19,7 +19,11 @@ default: async ({request, fetch, cookies}) => {
         });
 
         if (!response.ok) {
-            return {"error": "Wrong Username or Password"}
+            if (response.status === 401) {
+                return {error: "Username or Password is wrong."}
+            } else {
+                return {error: "Unexpected error!"}
+            }
         }
   
         await setCookie(response, cookies);

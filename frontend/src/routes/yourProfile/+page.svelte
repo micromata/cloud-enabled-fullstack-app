@@ -14,7 +14,7 @@
         </div>
 
         <div class="mb-4">
-            <p class="text-xl font-bold mb-2">Guten Tag {$auth.username}</p>
+            <p class="text-xl font-bold mb-2">Good evening {$auth.username}</p>
             <hr>
             <p class="text-lg">E-Mail: {$auth.email}</p>
         </div>
