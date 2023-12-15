@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import static com.oskarwiedeweg.cloudwork.BitUtils.SettingBits.SETUP_TWO_FACTOR_AUTH;
 import static com.oskarwiedeweg.cloudwork.BitUtils.SettingBits.TWO_FACTOR_AUTH;
 
 @Data
@@ -42,7 +43,7 @@ public class TwoFAService {
 
         userDao.updateUserSettingsWith2FASecret(
                 user.getId(),
-                BitUtils.addBit(user.getSettings(), TWO_FACTOR_AUTH.getBit()),
+                BitUtils.addBit(user.getSettings(), SETUP_TWO_FACTOR_AUTH.getBit()),
                 user2FASecret
         );
 
@@ -77,7 +78,7 @@ public class TwoFAService {
         User user = tempTokenDao.retrieveTempToken(token)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Temp token is invalid"));
 
-        if (!has2FAEnabled(user)) {
+        if (!BitUtils.hasBit(user.getSettings(), SETUP_TWO_FACTOR_AUTH.getBit())) {
             return user;
         }
 
@@ -86,6 +87,13 @@ public class TwoFAService {
         }
 
         tempTokenDao.deleteTempToken(token);
+
+        Long newUserSettings = BitUtils.removeBit(
+                BitUtils.addBit(user.getSettings(), TWO_FACTOR_AUTH.getBit()),
+                SETUP_TWO_FACTOR_AUTH.getBit());
+
+        userDao.updateUserSettings(user.getId(), newUserSettings);
+
         return user;
     }
 }
