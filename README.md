@@ -10,7 +10,7 @@ The goal now is it to build a small feed (like Instagram) with login, registrati
 
 ### View the application
 
-The latest version of the application is available [here](https://cloudwork-frontend.onrender.com).
+The latest version of the application is available [here](https://cosmos-connect.onrender.com).
 
 ### Local Setup
 
