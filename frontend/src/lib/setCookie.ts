@@ -5,7 +5,6 @@ export async function setCookie(response: Response, cookies: Cookies) {
     if (!response.ok) {
         throw error(400);
     }
-
     const responseData = await response.json();
     const authToken = responseData.accessToken;
 

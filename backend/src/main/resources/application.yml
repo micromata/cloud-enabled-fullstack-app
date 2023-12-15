@@ -1,7 +1,5 @@
 spring:
+  application:
+    name: "CosmosConnect"
   datasource:
     driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect

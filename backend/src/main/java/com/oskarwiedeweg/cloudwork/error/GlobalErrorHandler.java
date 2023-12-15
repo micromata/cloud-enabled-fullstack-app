@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,6 +31,11 @@ public class GlobalErrorHandler {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorDto> handleError(ResponseStatusException throwable) {
         return construct(throwable.getStatusCode(), throwable.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorDto> handleError(AccessDeniedException throwable) {
+        return construct(HttpStatus.FORBIDDEN, throwable.getMessage());
     }
 
 
