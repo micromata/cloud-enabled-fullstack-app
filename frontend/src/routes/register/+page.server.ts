@@ -20,7 +20,6 @@ export const actions:Actions = {
             body: JSON.stringify({ username, email, password, passwordConfirm }),
         });
 
-        let json = await response.json();
 
         if (!response.ok) {
             let json = await response.json();
