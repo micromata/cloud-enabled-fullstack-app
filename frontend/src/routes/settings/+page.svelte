@@ -2,6 +2,13 @@
     import { auth } from "$lib/user";
     import img from '$lib/assets/EmployeePictogram.png';
 
+    function confirmDisable2FA() {
+        const isConfirmed = window.confirm("Are you sure you want to disable 2FA?");
+        if (isConfirmed) {
+            // Hier können Sie die Logik für die Deaktivierung von 2FA einfügen
+            console.log("2FA disabled!");
+        }
+    }
     export let data;
 </script>
 
@@ -23,7 +30,7 @@
                         Activate 2FA
                     </button>
                     <span class="text-green-500">Active</span>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded disabled:bg-gray-400" onclick="window.location.href='/FASetup';">
+                    <button class="bg-red-500 text-white px-4 py-2 rounded disabled:bg-gray-400" on:click={confirmDisable2FA}>
                         Disable 2FA
                     </button>
                 </div>
@@ -34,11 +41,12 @@
                         Activate 2FA
                     </button>
                     <span class="text-red-600">Disabled</span>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded disabled:bg-gray-400" onclick="window.location.href='/FASetup';" disabled>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded disabled:bg-gray-400" on:click={confirmDisable2FA} disabled>
                         Disable 2FA
                     </button>
                 </div>
             {/if}
+
         </div>
     </form>
 </div>
