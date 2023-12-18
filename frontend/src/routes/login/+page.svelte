@@ -1,14 +1,16 @@
 <script>
     import Input from "$lib/components/Input.svelte";
+    import SSO from "$lib/components/SSO.svelte";
 
     export let form;
 </script>
-
 <div class="flex items-center pb-80 justify-center h-screen">
-    <form method="post" class="w-full max-w-md bg-white shadow-md rounded-md p-6">
+    <form action="?/username" method="post" class="w-full max-w-md bg-white shadow-md rounded-md p-6">
         <Input label="Username" name="username" type="text"/>
 
         <Input label="Password" name="password" type="password" errors={form?.error ? [form.error] : undefined} errorType="message"/>
+
+        <SSO/>
 
         <button class="w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none" type="submit">
             Sign In
