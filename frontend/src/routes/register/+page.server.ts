@@ -20,7 +20,6 @@ export const actions:Actions = {
             body: JSON.stringify({ username, email, password, passwordConfirm }),
         });
 
-
         if (!response.ok) {
             let json = await response.json();
             if (response.status === 409) {
