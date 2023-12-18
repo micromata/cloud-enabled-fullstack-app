@@ -50,8 +50,6 @@
             {/each}
         </div>
     </div>
-
-
 </main>
 
 
