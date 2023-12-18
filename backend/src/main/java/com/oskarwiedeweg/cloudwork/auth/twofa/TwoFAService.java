@@ -78,7 +78,9 @@ public class TwoFAService {
         User user = tempTokenDao.retrieveTempToken(token)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Temp token is invalid"));
 
-        if (!BitUtils.hasBit(user.getSettings(), SETUP_TWO_FACTOR_AUTH.getBit())) {
+        boolean has2FABit = BitUtils.hasBit(user.getSettings(), TWO_FACTOR_AUTH.getBit());
+        boolean has2FASetupBit = BitUtils.hasBit(user.getSettings(), SETUP_TWO_FACTOR_AUTH.getBit());
+        if (!has2FABit && !has2FASetupBit) {
             return user;
         }
 

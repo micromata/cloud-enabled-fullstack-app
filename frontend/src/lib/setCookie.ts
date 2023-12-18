@@ -8,6 +8,7 @@ export async function setCookie(response: Response, cookies: Cookies) {
     const responseData = await response.json();
     const authToken = responseData.accessToken;
     const tempAuthKey = responseData.tempAuthKey;
+    const needsTwoFa = responseData.needs2FA;
 
 // Setze das Cookie mit einer Gültigkeitsdauer von 30 Tagen
     const expirationDate = new Date();
@@ -22,6 +23,11 @@ export async function setCookie(response: Response, cookies: Cookies) {
 
     if(tempAuthKey !== null) {
         cookies.set('tempToken', tempAuthKey, {expires: expirationDateShort,httpOnly: true})
+    }
+
+    if(needsTwoFa === true)
+    {
+        throw redirect(302, '/FAConfirm')
     }
 
     throw redirect(302, '/');
