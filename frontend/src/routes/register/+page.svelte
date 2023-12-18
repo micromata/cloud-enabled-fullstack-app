@@ -3,6 +3,8 @@
     let passwordConfirm = "";
 
     $: passwordValid = password === passwordConfirm
+
+    export let form;
 </script>
 
 
@@ -36,6 +38,9 @@
             </label>
             {#if !passwordValid}
                 <span class="text-red-600">Passwords are not identical</span>
+            {/if}
+            {#if (form?.error)}
+                <span class="text-red-600">{form.error}</span>
             {/if}
         </div>
 

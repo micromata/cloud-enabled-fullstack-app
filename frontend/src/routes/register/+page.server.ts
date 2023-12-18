@@ -12,13 +12,23 @@ export const actions:Actions = {
         const password = data.get('password');
         const passwordConfirm = data.get('passwordConfirm');
 
-        const response = await fetch(env.PUBLIC_BACKEND_URL + 'v1/auth/register', {
+        const response = await fetch(env.PUBLIC_BACKEND_URL + `v1/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ username, email, password, passwordConfirm }),
         });
+
+        if (!response.ok) {
+            if (response.status === 409) {
+                return {error: "User already exists"}
+            } else if (400) {
+                return {error: "something is to short"}
+            } else {
+                return {error: "Unexpected error!"}
+            }
+        }
 
         await setCookie(response, cookies);
     }

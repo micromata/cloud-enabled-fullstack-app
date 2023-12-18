@@ -1,5 +1,6 @@
 package com.oskarwiedeweg.cloudwork.user;
 
+import com.oskarwiedeweg.cloudwork.user.dto.SettingsDto;
 import com.oskarwiedeweg.cloudwork.user.dto.Setup2FADto;
 import lombok.Data;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +26,12 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public Map<String, Boolean> verify2FA(@AuthenticationPrincipal Long userId, @PathVariable("code") Long code, @RequestParam("tempToken") String tempToken) {
         return Map.of("valid", userService.setup2FA(userId, code, tempToken));
+    }
+
+    @GetMapping("/settings")
+    @PreAuthorize("isAuthenticated()")
+    public SettingsDto getSettings(@AuthenticationPrincipal Long userId){
+        return userService.getSettings(userId);
     }
 
 }
