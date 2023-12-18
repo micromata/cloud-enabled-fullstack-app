@@ -1,5 +1,9 @@
 package com.oskarwiedeweg.cloudwork.config;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import com.oskarwiedeweg.cloudwork.auth.AppExpressionRoot;
 import com.oskarwiedeweg.cloudwork.auth.c4.C4MethodSecurityExpressionHandler;
 import com.oskarwiedeweg.cloudwork.auth.token.TokenFilter;
@@ -12,6 +16,7 @@ import dev.samstevens.totp.secret.SecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import dev.samstevens.totp.time.TimeProvider;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
@@ -27,6 +32,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.List;
 
 @Data
 @Configuration
@@ -91,6 +100,18 @@ public class SecurityConfig {
     @Bean
     public CodeVerifier codeVerifier(CodeGenerator codeGenerator, TimeProvider timeProvider) {
         return new DefaultCodeVerifier(codeGenerator, timeProvider);
+    }
+
+    @Bean
+    public GoogleIdTokenVerifier googleIdTokenVerifier(HttpTransport httpTransport, @Value("${sso.google.clientId}") String googleClientId) {
+        return new GoogleIdTokenVerifier.Builder(httpTransport, GsonFactory.getDefaultInstance())
+                .setAudience(List.of(googleClientId))
+                .build();
+    }
+
+    @Bean
+    public HttpTransport httpTransport() throws GeneralSecurityException, IOException {
+        return GoogleNetHttpTransport.newTrustedTransport();
     }
 
 }

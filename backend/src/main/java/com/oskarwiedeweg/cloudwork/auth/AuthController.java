@@ -3,6 +3,7 @@ package com.oskarwiedeweg.cloudwork.auth;
 import com.oskarwiedeweg.cloudwork.auth.dto.AuthenticationDto;
 import com.oskarwiedeweg.cloudwork.auth.dto.LoginDto;
 import com.oskarwiedeweg.cloudwork.auth.dto.RegisterDto;
+import com.oskarwiedeweg.cloudwork.auth.dto.SSOLogin;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,11 @@ public class AuthController {
     @PostMapping("/verify/{code}")
     public AuthenticationDto verify2FACode(@RequestParam("tempToken") String token, @PathVariable("code") Long twoFACode) {
         return authService.verify(token, twoFACode);
+    }
+
+    @PostMapping("/sso/google")
+    public AuthenticationDto ssoLogin(@RequestBody @Valid SSOLogin body) {
+        return authService.ssoLogin(body);
     }
 
 }
