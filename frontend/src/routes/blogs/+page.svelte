@@ -21,9 +21,7 @@
         <button class="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400 ml-auto" onclick="window.location.href='/createFeed';" disabled={!$auth}>
             Create new Blog
         </button>
-        {/if}
-
-        {#if !$auth}
+        {:else}
         <span class="mt-3">
             <Alert headline="Please Log In to Post your Feed!" message="You can Log In " linkText="here." link="/login"/>
         </span>
@@ -52,6 +50,7 @@
             {/each}
         </div>
     </div>
+
 </main>
 
 
