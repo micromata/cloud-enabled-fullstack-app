@@ -16,9 +16,12 @@
         <div class="mb-4 pt">
             <p class="text-xl font-bold mb-2">Good evening {$auth.username}</p>
             <hr>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded mt-3" onclick="window.location.href='/FASetup';">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded mt-3" onclick="window.location.href='/FASetup';" >
                 Activate 2FA
             </button>
+            {#if data.value}
+                <span>Active</span>
+            {/if}
         </div>
     </form>
 </div>
