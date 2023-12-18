@@ -50,6 +50,14 @@ public class TwoFAService {
         return generateQRCode(user.getEmail(), user2FASecret);
     }
 
+    public void disable2FA(User user) {
+        userDao.updateUserSettingsWith2FASecret(
+                user.getId(),
+                BitUtils.removeBit(BitUtils.removeBit(user.getSettings(), SETUP_TWO_FACTOR_AUTH.getBit()), TWO_FACTOR_AUTH.getBit()),
+                null
+        );
+    }
+
     public boolean has2FAEnabled(User user) {
         return BitUtils.hasBit(user.getSettings(), TWO_FACTOR_AUTH.getBit());
     }

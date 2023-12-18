@@ -22,6 +22,12 @@ public class UserController {
         return userService.setup2FA(userId);
     }
 
+    @DeleteMapping("/2fa/disable")
+    @PreAuthorize("isAuthenticated()")
+    public void disable2FA(@AuthenticationPrincipal Long userId) {
+        userService.disable2FA(userId);
+    }
+
     @PostMapping("/2fa/verify/{code}")
     @PreAuthorize("isAuthenticated()")
     public Map<String, Boolean> verify2FA(@AuthenticationPrincipal Long userId, @PathVariable("code") Long code, @RequestParam("tempToken") String tempToken) {
