@@ -10,3 +10,5 @@ jwt:
 sso:
   google:
     clientId: "1000232559307-n4gnukqqpcmiobetmhjn4t98ojvesnui.apps.googleusercontent.com"
+  github:
+    clientId: "Iv1.8fb52ffcb5732f14"
