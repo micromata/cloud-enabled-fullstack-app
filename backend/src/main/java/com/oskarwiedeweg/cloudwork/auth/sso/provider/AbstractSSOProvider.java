@@ -22,7 +22,7 @@ public abstract class AbstractSSOProvider {
         this.secretGenerator = secretGenerator;
     }
 
-    protected abstract Map<String, Object> verifyAndGet(String token);
+    public abstract Map<String, Object> verifyAndGet(String token);
 
     public abstract String getProviderName();
 

@@ -24,7 +24,7 @@ public class GoogleSSOProvider extends AbstractSSOProvider {
 
     @SneakyThrows
     @Override
-    protected Map<String, Object> verifyAndGet(String token) {
+    public Map<String, Object> verifyAndGet(String token) {
         GoogleIdToken idToken = googleIdTokenVerifier.verify(token);
 
         if (idToken == null) {

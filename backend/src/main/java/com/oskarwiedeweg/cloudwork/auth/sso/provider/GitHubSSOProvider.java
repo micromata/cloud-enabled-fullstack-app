@@ -36,7 +36,7 @@ public class GitHubSSOProvider extends AbstractSSOProvider{
     }
 
     @Override
-    protected Map<String, Object> verifyAndGet(String token) {
+    public Map<String, Object> verifyAndGet(String token) {
         String accessToken = getAccessToken(token);
         String userId = getUserId(accessToken);
         String email = getUserEmail(accessToken);
