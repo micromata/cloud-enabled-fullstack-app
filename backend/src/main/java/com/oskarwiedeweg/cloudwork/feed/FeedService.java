@@ -33,7 +33,12 @@ public class FeedService {
     }
 
     public void createPost(Long userId, CreatePostDto body) {
-        postDao.savePost(userId, body.getTitle(), body.getDescription());
+        postDao.savePost(userId,
+                body.getTitle(),
+                body.getPreview(),
+                body.getDescription(),
+                body.getImage()
+        );
     }
 
     public void deletePost(Long postId) {
@@ -43,7 +48,12 @@ public class FeedService {
     }
 
     public void updatePost(Long postId, CreatePostDto body) {
-        if (!postDao.updatePost(postId, body.getTitle(), body.getDescription())) {
+        if (!postDao.updatePost(postId,
+                body.getTitle(),
+                body.getPreview(),
+                body.getDescription(),
+                body.getImage())
+        ) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with id '%s' not found!".formatted(postId));
         }
     }
