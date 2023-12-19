@@ -2,6 +2,7 @@ import {setCookie} from "$lib/setCookie";
 import type {Actions} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
 import {error, redirect} from "@sveltejs/kit";
+import type {PageServerLoad} from "./$types";
 
 export const actions:Actions = {
     default: async ({request, fetch, locals}) => {
@@ -29,5 +30,12 @@ export const actions:Actions = {
 
         throw redirect(303, '/blogs?created');
 
+    }
+}
+
+export const load: PageServerLoad = async ({locals}) => {
+    if(!locals.user){
+        console.log("Access denied!")
+        throw redirect(303, "/");
     }
 }
