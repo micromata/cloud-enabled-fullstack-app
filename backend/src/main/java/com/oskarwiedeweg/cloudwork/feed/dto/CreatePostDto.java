@@ -16,7 +16,14 @@ public class CreatePostDto {
 
     @NotBlank(message = "Is empty.")
     @Pattern(regexp = "([A-Za-z0-9-._ ])", message = "Other character than A-Z, a-z, 0-9, -, ., or _")
+    @Size(min = 300, message = "More than 300 characters.")
+    private final String preview;
+
+    @NotBlank(message = "Is empty.")
+    @Pattern(regexp = "([A-Za-z0-9-._ ])", message = "Other character than A-Z, a-z, 0-9, -, ., or _")
     @Size(min = 5000, message = "More than 5000 characters.")
     private final String description;
+
+    private final String image;
 
 }

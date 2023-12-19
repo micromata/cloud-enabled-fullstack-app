@@ -21,8 +21,8 @@ public class PostDao {
         return jdbcTemplate.query("select posts.*, users.name as user_name from posts inner join users on posts.user_id = users.id order by posts.published_at desc", rowMapper);
     }
 
-    public void savePost(Long userId, String title, String description) {
-        jdbcTemplate.update("insert into posts (user_id, title, description, published_at) values (?, ?, ?, ?)", userId, title, description, Timestamp.valueOf(LocalDateTime.now(Clock.systemUTC())));
+    public void savePost(Long userId, String title, String preview, String description, String image) {
+        jdbcTemplate.update("insert into posts (user_id, title, preview, description, image, published_at) values (?, ?, ?, ?, ?, ?)", userId, title, preview, description, image, Timestamp.valueOf(LocalDateTime.now(Clock.systemUTC())));
     }
 
     public Optional<Post> findPostById(Long postId) {
@@ -38,7 +38,13 @@ public class PostDao {
         return jdbcTemplate.update("delete from posts where id = ?", postId) == 1;
     }
 
-    public boolean updatePost(Long postId, String title, String description) {
-        return jdbcTemplate.update("update posts set title = ?, description = ? where id = ?", title, description, postId) == 1;
+    public boolean updatePost(Long postId, String title, String preview, String description, String image) {
+        return jdbcTemplate.update("update posts set title = ?, preview = ?, description = ?, image = ? where id = ?",
+                title,
+                preview,
+                description,
+                image,
+                postId
+        ) == 1;
     }
 }
