@@ -42,6 +42,7 @@ export const actions:Actions = {
         });
 
         if (!response.ok) {
+            console.log(await response.json());
             return {error: "Unexpected error!"}
         }
 
