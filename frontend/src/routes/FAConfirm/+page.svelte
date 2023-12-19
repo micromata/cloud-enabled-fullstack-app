@@ -1,5 +1,6 @@
 <script>
     import img from '$lib/assets/SadQrCode.svg'
+    import ButtonDone from "$lib/components/ButtonDone.svelte";
     export let form
 </script>
 
@@ -18,11 +19,8 @@
                             {#if form?.error}
                             <span class="text-red-600">{form.error}</span>
                             {/if}
-                            <button
-                                    class="mt-5 w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none"
-                            >
-                                Done
-                            </button>
+
+                            <ButtonDone titel="Done"/>
                         </div>
 
                         </div>

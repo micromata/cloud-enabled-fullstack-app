@@ -1,5 +1,6 @@
 <script>
     import img from '$lib/assets/SadQrCode.svg'
+    import ButtonDone from "$lib/components/ButtonDone.svelte";
     export let data
 </script>
 
@@ -24,14 +25,10 @@
                     <div class="mb-4 pt-5">
                         <label class="block text-gray-700 text-sm font-semibold mb-2">
                             First Token
-                            <input placeholder="XXX-XXX" name="authToken" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type="password">
+                            <input placeholder="XXX-XXX" name="authToken" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type="text">
                         </label>
-                    <button
-                            class="mt-5 w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none"
-                    >
-                        Done
-                    </button>
-
+                        <ButtonDone titel="Done"/>
+                     </div>
                 </div>
             </form>
                 {/if}

@@ -5,12 +5,14 @@
 
     export let errors: string[] | undefined = undefined;
     export let errorType: 'requirements' | 'message' = "requirements";
+
+    export let value: any = null;
 </script>
 
 <div class="mb-4">
     <label class="block text-gray-700 text-sm font-semibold mb-2">
         {label}
-        <input name={name} class:border-red-600={errors} class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type={type}>
+        <input name={name} class:border-red-600={errors} on:change={e => value = e.target?.value} class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type={type}>
     </label>
     {#if (errors)}
         {#if (errorType === "requirements")}

@@ -20,11 +20,13 @@ export const actions:Actions = {
             body: JSON.stringify({ username, email, password, passwordConfirm }),
         });
 
+
         if (!response.ok) {
+            let json = await response.json();
             if (response.status === 409) {
-                return {error: "User already exists"}
+                return {error: "User already exists" }
             } else if (400) {
-                return {error: "something is to short"}
+                return {errors: json.error}
             } else {
                 return {error: "Unexpected error!"}
             }
