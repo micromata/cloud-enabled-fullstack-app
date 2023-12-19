@@ -8,13 +8,9 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 @Component
 public class PostRowMapper implements RowMapper<Post> {
-
-    public static final Calendar tzUTC = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 
     private final RowMapper<User> userPrefixedRowMapper = new UserRowMapper(true);
 
@@ -25,7 +21,9 @@ public class PostRowMapper implements RowMapper<Post> {
         return new Post(
                 resultSet.getLong("id"),
                 resultSet.getString("title"),
+                resultSet.getString("preview"),
                 resultSet.getString("description"),
+                resultSet.getString("image"),
                 publishedAt.toLocalDateTime(),
                 userPrefixedRowMapper.mapRow(resultSet, rowNum)
         );

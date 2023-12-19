@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import static com.oskarwiedeweg.cloudwork.BitUtils.SettingBits.SETUP_TWO_FACTOR_AUTH;
 import static com.oskarwiedeweg.cloudwork.BitUtils.SettingBits.TWO_FACTOR_AUTH;
 
 @Data
@@ -42,11 +43,19 @@ public class TwoFAService {
 
         userDao.updateUserSettingsWith2FASecret(
                 user.getId(),
-                BitUtils.addBit(user.getSettings(), TWO_FACTOR_AUTH.getBit()),
+                BitUtils.addBit(user.getSettings(), SETUP_TWO_FACTOR_AUTH.getBit()),
                 user2FASecret
         );
 
         return generateQRCode(user.getEmail(), user2FASecret);
+    }
+
+    public void disable2FA(User user) {
+        userDao.updateUserSettingsWith2FASecret(
+                user.getId(),
+                BitUtils.removeBit(BitUtils.removeBit(user.getSettings(), SETUP_TWO_FACTOR_AUTH.getBit()), TWO_FACTOR_AUTH.getBit()),
+                null
+        );
     }
 
     public boolean has2FAEnabled(User user) {
@@ -77,7 +86,9 @@ public class TwoFAService {
         User user = tempTokenDao.retrieveTempToken(token)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Temp token is invalid"));
 
-        if (!has2FAEnabled(user)) {
+        boolean has2FABit = BitUtils.hasBit(user.getSettings(), TWO_FACTOR_AUTH.getBit());
+        boolean has2FASetupBit = BitUtils.hasBit(user.getSettings(), SETUP_TWO_FACTOR_AUTH.getBit());
+        if (!has2FABit && !has2FASetupBit) {
             return user;
         }
 
@@ -86,6 +97,13 @@ public class TwoFAService {
         }
 
         tempTokenDao.deleteTempToken(token);
+
+        Long newUserSettings = BitUtils.removeBit(
+                BitUtils.addBit(user.getSettings(), TWO_FACTOR_AUTH.getBit()),
+                SETUP_TWO_FACTOR_AUTH.getBit());
+
+        userDao.updateUserSettings(user.getId(), newUserSettings);
+
         return user;
     }
 }
