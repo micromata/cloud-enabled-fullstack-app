@@ -1,5 +1,6 @@
 package com.oskarwiedeweg.cloudwork.user;
 
+import com.oskarwiedeweg.cloudwork.auth.dto.SSOLogin;
 import com.oskarwiedeweg.cloudwork.user.dto.SettingsDto;
 import com.oskarwiedeweg.cloudwork.user.dto.Setup2FADto;
 import lombok.Data;
@@ -26,6 +27,12 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public Map<String, Boolean> verify2FA(@AuthenticationPrincipal Long userId, @PathVariable("code") Long code, @RequestParam("tempToken") String tempToken) {
         return Map.of("valid", userService.setup2FA(userId, code, tempToken));
+    }
+
+    @PostMapping("/sso/new/{provider}")
+    @PreAuthorize("isAuthenticated()")
+    public void addProvider(@PathVariable("provider") String provider, @AuthenticationPrincipal Long userId, @RequestBody SSOLogin ssoLogin) {
+        userService.addSSOProvider(userId, provider, ssoLogin);
     }
 
     @GetMapping("/settings")
