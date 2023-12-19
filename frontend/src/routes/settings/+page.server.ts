@@ -5,8 +5,6 @@ export const load:ServerLoad = async ({fetch, locals}) => {
 
     const token = locals.token;
 
-    console.log("Test");
-
     const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/user/settings", {
         method: 'GET',
         headers: {
@@ -28,8 +26,9 @@ export const actions:Actions = { default: async ({fetch, locals}) => {
 
         const token = locals.token;
 
-        const response = await fetch(env.PUBLIC_BACKEND_URL + 'v1/user/2fa/disable', {
-            method: 'delete',
+
+        const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/user/2fa/disable", {
+            method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -38,5 +37,8 @@ export const actions:Actions = { default: async ({fetch, locals}) => {
         if(!response.ok) {
             return {error: "Unexpected Error"};
         }
+
+        console.log("test")
+
     }
 }
