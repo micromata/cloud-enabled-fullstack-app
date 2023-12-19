@@ -1,4 +1,4 @@
-import type {ServerLoad} from "@sveltejs/kit";
+import type {Actions, ServerLoad} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
 
 export const load:ServerLoad = async ({fetch, locals}) => {
@@ -26,15 +26,6 @@ export const load:ServerLoad = async ({fetch, locals}) => {
 
 export const actions:Actions = { default: async ({fetch, locals}) => {
 
-        const token = locals.token;
-
-
-        const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/user/2fa/disable", {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
 
         const token = locals.token;
 
