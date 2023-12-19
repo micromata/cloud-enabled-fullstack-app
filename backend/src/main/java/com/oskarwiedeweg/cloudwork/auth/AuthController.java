@@ -33,9 +33,9 @@ public class AuthController {
         return authService.verify(token, twoFACode);
     }
 
-    @PostMapping("/sso/google")
-    public AuthenticationDto ssoLogin(@RequestBody @Valid SSOLogin body) {
-        return authService.ssoLogin(body);
+    @PostMapping("/sso/{provider}")
+    public AuthenticationDto ssoLogin(@RequestBody @Valid SSOLogin body, @PathVariable("provider") String provider) {
+        return authService.ssoLogin(body, provider);
     }
 
 }

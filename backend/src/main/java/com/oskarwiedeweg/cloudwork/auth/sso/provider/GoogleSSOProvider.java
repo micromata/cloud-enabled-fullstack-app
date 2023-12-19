@@ -1,7 +1,8 @@
-package com.oskarwiedeweg.cloudwork.auth.sso;
+package com.oskarwiedeweg.cloudwork.auth.sso.provider;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.oskarwiedeweg.cloudwork.auth.sso.SSODao;
 import com.oskarwiedeweg.cloudwork.user.UserService;
 import dev.samstevens.totp.secret.SecretGenerator;
 import lombok.SneakyThrows;
@@ -38,7 +39,7 @@ public class GoogleSSOProvider extends AbstractSSOProvider {
     }
 
     @Override
-    protected String getProviderName() {
+    public String getProviderName() {
         return "google";
     }
 }

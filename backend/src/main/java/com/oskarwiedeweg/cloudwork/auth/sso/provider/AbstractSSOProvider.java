@@ -1,5 +1,7 @@
-package com.oskarwiedeweg.cloudwork.auth.sso;
+package com.oskarwiedeweg.cloudwork.auth.sso.provider;
 
+import com.oskarwiedeweg.cloudwork.auth.sso.SSOConnection;
+import com.oskarwiedeweg.cloudwork.auth.sso.SSODao;
 import com.oskarwiedeweg.cloudwork.user.User;
 import com.oskarwiedeweg.cloudwork.user.UserService;
 import dev.samstevens.totp.secret.SecretGenerator;
@@ -22,7 +24,7 @@ public abstract class AbstractSSOProvider {
 
     protected abstract Map<String, Object> verifyAndGet(String token);
 
-    protected abstract String getProviderName();
+    public abstract String getProviderName();
 
     @SneakyThrows
     public final User ssoLogin(String ssoToken) {
