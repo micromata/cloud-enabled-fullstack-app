@@ -5,9 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oskarwiedeweg.cloudwork.auth.dto.GitHubSSOAccessTokenResponse;
 import com.oskarwiedeweg.cloudwork.auth.dto.GitHubSSOUserEmail;
 import com.oskarwiedeweg.cloudwork.auth.dto.GitHubSSOUserInfo;
-import com.oskarwiedeweg.cloudwork.auth.sso.SSODao;
-import com.oskarwiedeweg.cloudwork.user.UserService;
-import dev.samstevens.totp.secret.SecretGenerator;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class GitHubSSOProvider extends AbstractSSOProvider{
+public class GitHubSSOProvider implements SSOProvider {
 
     @Value("${sso.github.clientId}")
     private String clientId;
@@ -30,8 +27,7 @@ public class GitHubSSOProvider extends AbstractSSOProvider{
 
     private final RestTemplate restTemplate;
 
-    protected GitHubSSOProvider(SSODao ssoDao, UserService userService, SecretGenerator secretGenerator, RestTemplate restTemplate) {
-        super(ssoDao, userService, secretGenerator);
+    protected GitHubSSOProvider(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

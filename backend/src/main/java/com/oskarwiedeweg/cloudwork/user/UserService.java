@@ -1,8 +1,6 @@
 package com.oskarwiedeweg.cloudwork.user;
 
 import com.oskarwiedeweg.cloudwork.BitUtils;
-import com.oskarwiedeweg.cloudwork.auth.dto.SSOLogin;
-import com.oskarwiedeweg.cloudwork.auth.sso.SSOService;
 import com.oskarwiedeweg.cloudwork.auth.twofa.TwoFAService;
 import com.oskarwiedeweg.cloudwork.exception.DuplicateUserException;
 import com.oskarwiedeweg.cloudwork.user.dto.SettingsDto;
@@ -22,7 +20,6 @@ import java.util.Set;
 public class UserService {
 
     private final UserDao userDao;
-    private final SSOService ssoService;
     private final PasswordEncoder passwordEncoder;
     private final TwoFAService twoFAService;
 
@@ -62,9 +59,5 @@ public class UserService {
                 }
             }
         return new SettingsDto(activeSettings);
-    }
-
-    public void addSSOProvider(Long userId, String provider, SSOLogin ssoLogin) {
-        ssoService.addSSOProvider(userId, provider, ssoLogin);
     }
 }
