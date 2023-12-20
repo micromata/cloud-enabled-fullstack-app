@@ -11,6 +11,9 @@ export const handle: Handle = async ({event, resolve}) => {
             username, email
         }
         event.locals.token = authToken;
+    } else {
+        event.locals.user = undefined;
+        event.locals.token = undefined;
     }
 
     const response = await resolve(event);
