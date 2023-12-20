@@ -19,6 +19,7 @@ public class CreatePostDto {
 
     @Pattern(regexp = "([A-Za-z0-9-._ ])*", message = "Other character than A-Z, a-z, 0-9, -, ., or _")
     @Size(max = 5000, message = "More than 5000 characters.")
+
     private final String description;
 
     private final String image;
