@@ -1,7 +1,13 @@
 import type {Actions, ServerLoad} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
+import {redirect} from "@sveltejs/kit";
 
 export const load:ServerLoad = async ({fetch, locals}) => {
+
+    if(!locals.user){
+        console.log("Access denied!")
+        throw redirect(303, "/login");
+    }
 
     const token = locals.token;
 
