@@ -14,6 +14,11 @@ export const load: ServerLoad = async ({fetch, locals}) => {
         throw redirect(303, "/login");
     }
 
+    if(!locals.user){
+        console.log("Access denied!")
+        throw redirect(303, "/login");
+    }
+
     const token = locals.token;
 
 
