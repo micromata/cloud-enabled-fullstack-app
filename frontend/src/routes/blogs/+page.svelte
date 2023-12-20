@@ -14,7 +14,7 @@
 <main class="p-4 relative">
     <div class="max-w-screen-xl mx-auto flex flex-col">
         {#if ($page.url.searchParams.has("created"))}
-            <span class="text-green-500 flex items-center justify-center h-full">Created</span>
+            <Alert headline="Blog was created successfully!" message="It is now public and anyone can learn from it :)" color="green"/>
         {/if}
 
         {#if $auth}
