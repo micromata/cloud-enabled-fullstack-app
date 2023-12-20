@@ -41,6 +41,13 @@ public class UserService {
         return new Setup2FADto(setupQrCode, tempToken);
     }
 
+    public void disable2FA(Long userId) {
+        User user = userDao.findUserById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User does not exist"));
+
+        twoFAService.disable2FA(user);
+    }
+
+
     public boolean setup2FA(Long userId, Long code, String tempToken) {
         try {
             User validate = twoFAService.validate(tempToken, code);
