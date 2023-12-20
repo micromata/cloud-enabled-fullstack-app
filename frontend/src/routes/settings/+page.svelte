@@ -2,11 +2,9 @@
     import {auth} from "$lib/user";
     import img from '$lib/assets/EmployeePictogram.png';
     import {getGreeting} from '$lib/getGreeting'
-    import Modal from "$lib/components/Modal.svelte";
     import SSO from "$lib/components/SSO.svelte";
     import {page} from "$app/stores";
     import {ssoProviderMap} from "$lib/ssoProviderMap";
-    import Modal from "$lib/components/Modal.svelte";
 
     let modalOpen: boolean = false;
     let isDeactivateConfirmed: boolean | null = null;
@@ -15,20 +13,6 @@
         modalOpen = !modalOpen;
     }
 
-    let modalOpen: boolean = false;
-    let isDeactivateConfirmed: boolean | null = null;
-
-    function confirmDisable2FA() {
-        modalOpen = !modalOpen;
-    }
-
-    function confirmDisable2FA() {
-        const isConfirmed = window.confirm("Are you sure you want to disable 2FA?");
-        if (isConfirmed) {
-            // Hier können Sie die Logik für die Deaktivierung von 2FA einfügen
-            console.log("2FA disabled!");
-        }
-    }
     export let data;
     export let form;
 
@@ -45,7 +29,7 @@
         </div>
 
         <div class="mb-4 pt-4">
-            <p class="text-xl font-bold mb-2">{getGreeting()} {$auth.username}</p>
+            <p class="text-xl font-bold mb-2 overflow-ellipsis overflow-hidden">{getGreeting()}, {$auth.username}</p>
             <hr>
 
             {#if data.value}
@@ -95,7 +79,7 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                    <form method="POST">
+                                    <form method="POST" action="?/disable2FA">
                                         <button type="submit" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Deactivate</button>
                                     </form>
                                     <button type="button" on:click={confirmDisable2FA} class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
