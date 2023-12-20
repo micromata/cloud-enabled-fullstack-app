@@ -1,10 +1,9 @@
 import type {Actions} from "./$types";
 import {env} from "$env/dynamic/public";
-import { redirect } from '@sveltejs/kit';
 import {setCookie} from "$lib/setCookie";
 
 export const actions:Actions = {
-default: async ({request, fetch, cookies}) => {
+    username: async ({request, fetch, cookies}) => {
 
         const data = await request.formData();
         const username = data.get('username');
@@ -26,6 +25,27 @@ default: async ({request, fetch, cookies}) => {
             }
         }
   
+        await setCookie(response, cookies);
+    },
+    sso: async ({request, cookies}) => {
+        let formData = await request.formData();
+
+        const sso = formData.get("sso");
+
+        const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/auth/sso/google", {
+            method: "POST",
+            body: JSON.stringify({idToken: sso}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            console.log(await response.json());
+            return {error: "Unexpected error!"}
+        }
+
         await setCookie(response, cookies);
     }
 }

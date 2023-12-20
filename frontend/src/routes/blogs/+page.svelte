@@ -5,7 +5,6 @@
     import Alert from "$lib/components/Alert.svelte";
 
     export let data;
-
     export let alert:boolean = false;
 
     function flipFlopAlert() {
@@ -16,7 +15,6 @@
             alert = false;
         }
     }
-
 </script>
 <main class="p-4 relative">
     <div class="max-w-screen-xl mx-auto flex flex-col">
@@ -59,9 +57,7 @@
             {/each}
         </div>
 
-
     </div>
-
 
 </main>
 
