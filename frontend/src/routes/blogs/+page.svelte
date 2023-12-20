@@ -8,12 +8,7 @@
     export let alert:boolean = false;
 
     function flipFlopAlert() {
-        if(alert === false) {
-            alert=true;
-        }
-        else if(alert === true){
-            alert = false;
-        }
+        alert = !alert;
     }
 </script>
 <main class="p-4 relative">
