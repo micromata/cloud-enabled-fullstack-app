@@ -9,11 +9,13 @@
 </script>
 
     {#if selectedPost}
-<div class="container mx-auto p-8">
-    {#if selectedPost.image}
-    <img class="w-full h-80 object-cover mb-4 max-w-xl mx-auto" src={selectedPost.image} alt={selectedPost.title}>
+<div class="container mx-auto max-w-5xl p-8">
+    {#if selectedPost.image === null}
+        <div class="bg-gradient-to-br from-blue-500 to-blue-200 h-80 rounded-md"></div>
+    {:else if selectedPost.image !== "data:image/png;base64,"}
+        <img class="w-full h-80 object-cover mb-4 max-w-xl mx-auto rounded-md" src={selectedPost.image} alt={selectedPost.title}>
     {:else}
-        <div></div>
+        <div class="bg-gradient-to-br from-blue-500 to-blue-200 h-80 rounded-md"></div>
     {/if}
     <h1 class="text-4xl font-bold mb-2">{selectedPost.title}</h1>
     <p class="text-gray-600 mb-4">Date: XX.XX.20XX</p>

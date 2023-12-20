@@ -40,7 +40,9 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-12 relative">
             {#each data.posts as post (post.id)}
                 <div class="flex flex-col rounded-md shadow-md overflow-hidden transition-transform transform hover:scale-105 h-full">
-                    {#if post.image}
+                    {#if post.image === null}
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-200 h-48"></div>
+                    {:else if post.image !== "data:image/png;base64,"}
                         <img class="w-full h-48 object-cover" src={post.image} alt={post.title} />
                     {:else}
                         <div class="bg-gradient-to-br from-blue-500 to-blue-200 h-48"></div>
