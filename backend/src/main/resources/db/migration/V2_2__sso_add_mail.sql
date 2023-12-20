@@ -1,0 +1,1 @@
+alter table users_sso add column email varchar(255) not null default 'unknown';
