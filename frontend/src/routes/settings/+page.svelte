@@ -6,6 +6,14 @@
     import SSO from "$lib/components/SSO.svelte";
     import {page} from "$app/stores";
     import {ssoProviderMap} from "$lib/ssoProviderMap";
+    import Modal from "$lib/components/Modal.svelte";
+
+    let modalOpen: boolean = false;
+    let isDeactivateConfirmed: boolean | null = null;
+
+    function confirmDisable2FA() {
+        modalOpen = !modalOpen;
+    }
 
     let modalOpen: boolean = false;
     let isDeactivateConfirmed: boolean | null = null;
@@ -31,7 +39,6 @@
 
         <div class="mb-4 pt-4">
             <p class="text-xl font-bold mb-2">{getGreeting()} {$auth.username}</p>
-
             <hr>
 
             {#if data.value}
