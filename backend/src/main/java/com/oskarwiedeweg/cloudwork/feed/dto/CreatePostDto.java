@@ -8,15 +8,19 @@ import lombok.Data;
 @Data
 public class CreatePostDto {
 
-    @NotBlank(message = "Is empty.")
-    @Pattern(regexp = "([A-Za-z0-9-._ ])", message = "Other character than A-Z, a-z, 0-9, -, ., or _")
+    @Pattern(regexp = "([A-Za-z0-9-._ ])*", message = "Other character than A-Z, a-z, 0-9, -, ., or _")
     @Size(min = 5, message = "Less than 5 characters.")
-    @Size(min = 30, message = "More than 30 characters.")
+    @Size(max = 30, message = "More than 30 characters.")
     private final String title;
 
-    @NotBlank(message = "Is empty.")
-    @Pattern(regexp = "([A-Za-z0-9-._ ])", message = "Other character than A-Z, a-z, 0-9, -, ., or _")
-    @Size(min = 5000, message = "More than 5000 characters.")
+    @Pattern(regexp = "([A-Za-z0-9-._ ])*", message = "Other character than A-Z, a-z, 0-9, -, ., or _")
+    @Size(max = 300, message = "More than 300 characters.")
+    private final String preview;
+
+    @Pattern(regexp = "([A-Za-z0-9-._ ])*", message = "Other character than A-Z, a-z, 0-9, -, ., or _")
+    @Size(max = 5000, message = "More than 5000 characters.")
     private final String description;
+
+    private final String image;
 
 }

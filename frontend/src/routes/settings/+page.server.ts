@@ -1,11 +1,9 @@
-import type {ServerLoad} from "@sveltejs/kit";
+import {type Actions, redirect, type ServerLoad} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
 
-export const load:ServerLoad = async ({fetch, locals}) => {
+export const load: ServerLoad = async ({fetch, locals}) => {
 
     const token = locals.token;
-
-    console.log("Test");
 
     const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/user/settings", {
         method: 'GET',
@@ -14,13 +12,69 @@ export const load:ServerLoad = async ({fetch, locals}) => {
         }
     })
 
-    const responseValid = await response.json();
+    const response1 = await fetch(env.PUBLIC_BACKEND_URL + "v1/user/sso", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 
-    console.log(responseValid);
+    const responseValid = await response.json();
+    const ssoProviders = await response1.json();
 
     const activeSettings = responseValid.activeSettings;
     if (activeSettings.includes("TWO_FACTOR_AUTH")) {
-        return {value: true};
+        return {value: true, ssoProviders};
     }
+}
 
+
+export const actions:Actions = { default: async ({fetch, locals}) => {
+
+
+        const token = locals.token;
+
+        const response = await fetch(env.PUBLIC_BACKEND_URL + 'v1/user/2fa/disable', {
+            method: 'delete',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        if(!response.ok) {
+            return {error: "Unexpected Error"};
+        }
+
+    return {ssoProviders};
+}
+
+export const actions: Actions = {
+    deleteSSO: async ({locals, request, fetch}) => {
+        if (!locals.token) {
+            throw redirect(302, "/login");
+        }
+
+        const formData = await request.formData();
+        const providerId = formData.get("providerId");
+
+        if (!providerId) {
+            return {error: "Invalid request!"}
+        }
+
+        const response = await fetch(env.PUBLIC_BACKEND_URL + `v1/user/sso/remove/${providerId}`, {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${locals.token}`
+            }
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                return {error: "SSO Provider not found!"}
+            }
+            return {error: "An unexpected error occurred."}
+        }
+
+        return {success: true};
+    }
 }

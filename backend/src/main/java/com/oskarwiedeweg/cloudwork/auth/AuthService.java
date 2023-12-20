@@ -3,6 +3,8 @@ package com.oskarwiedeweg.cloudwork.auth;
 import com.oskarwiedeweg.cloudwork.auth.dto.AuthenticationDto;
 import com.oskarwiedeweg.cloudwork.auth.dto.LoginDto;
 import com.oskarwiedeweg.cloudwork.auth.dto.RegisterDto;
+import com.oskarwiedeweg.cloudwork.auth.dto.SSOLogin;
+import com.oskarwiedeweg.cloudwork.auth.sso.SSOService;
 import com.oskarwiedeweg.cloudwork.auth.token.TokenService;
 import com.oskarwiedeweg.cloudwork.auth.twofa.TwoFAService;
 import com.oskarwiedeweg.cloudwork.exception.DuplicateUserException;
@@ -24,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
+    private final SSOService ssoService;
     private final TokenService tokenService;
     private final ModelMapper modelMapper;
     private final UserService userService;
@@ -88,4 +91,7 @@ public class AuthService {
     }
 
 
+    public AuthenticationDto ssoLogin(SSOLogin body, String provider) {
+        return createAuthenticationDto(ssoService.ssoLogin(body.getIdToken(), provider));
+    }
 }

@@ -2,6 +2,7 @@ import {setCookie} from "$lib/setCookie";
 import type {Actions} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
 import {error, redirect} from "@sveltejs/kit";
+import type {PageServerLoad} from "./$types";
 
 export const actions:Actions = {
     default: async ({request, fetch, locals}) => {
@@ -10,9 +11,18 @@ export const actions:Actions = {
 
         const data = await request.formData();
         const title = data.get('title');
-        const shortDescription = data.get('shortDescription');
-        const content = data.get('content');
+        const preview = data.get('shortDescription');
+        const description = data.get('content');
+        const image = data.get('image');
 
+        const payload = {
+            title,
+            preview,
+            description,
+            image,
+        };
+
+        console.log(payload);
 
         const response = await fetch(env.PUBLIC_BACKEND_URL + 'v1/feed/new', {
             method: 'POST',
@@ -20,7 +30,7 @@ export const actions:Actions = {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ title }),
+            body: JSON.stringify(payload),
         });
 
         if (!response.ok) {
@@ -29,5 +39,12 @@ export const actions:Actions = {
 
         throw redirect(303, '/blogs?created');
 
+    }
+}
+
+export const load: PageServerLoad = async ({locals}) => {
+    if(!locals.user){
+        console.log("Access denied!")
+        throw redirect(303, "/");
     }
 }
