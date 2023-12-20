@@ -1,6 +1,5 @@
 package com.oskarwiedeweg.cloudwork.user;
 
-
 import com.oskarwiedeweg.cloudwork.auth.dto.SSOConnectionDto;
 import com.oskarwiedeweg.cloudwork.auth.dto.SSOLogin;
 import com.oskarwiedeweg.cloudwork.auth.sso.SSOService;
