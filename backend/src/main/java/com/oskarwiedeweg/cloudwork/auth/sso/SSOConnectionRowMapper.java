@@ -20,6 +20,7 @@ public class SSOConnectionRowMapper implements RowMapper<SSOConnection> {
                 resultSet.getLong("id"),
                 resultSet.getString("acc_id"),
                 resultSet.getString("provider"),
+                resultSet.getString("email"),
                 userRowMapper.mapRow(resultSet, rowNum)
         );
     }

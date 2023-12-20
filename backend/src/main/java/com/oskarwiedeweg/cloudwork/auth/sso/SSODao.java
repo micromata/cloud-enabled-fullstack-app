@@ -25,7 +25,15 @@ public class SSODao {
         return Optional.ofNullable(query.get(0));
     }
 
-    public void createSSOConnection(Long userId, String accountId, String provider) {
-        jdbcTemplate.update("insert into users_sso (user_id, acc_id, provider) values (?, ?, ?)", userId, accountId, provider);
+    public void createSSOConnection(Long userId, String accountId, String provider, String email) {
+        jdbcTemplate.update("insert into users_sso (user_id, acc_id, provider, email) values (?, ?, ?, ?)", userId, accountId, provider, email);
+    }
+
+    public List<SSOConnection> findAllByUserId(Long userId) {
+        return jdbcTemplate.query("select * from users_sso where user_id = ?", ssoConnectionRowMapper, userId);
+    }
+
+    public boolean removeById(Long providerId, Long userId) {
+        return jdbcTemplate.update("delete from users_sso where id = ? and user_id = ?", providerId, userId) == 1;
     }
 }

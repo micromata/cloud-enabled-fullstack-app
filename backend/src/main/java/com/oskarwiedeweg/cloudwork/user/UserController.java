@@ -1,5 +1,6 @@
 package com.oskarwiedeweg.cloudwork.user;
 
+import com.oskarwiedeweg.cloudwork.auth.dto.SSOConnectionDto;
 import com.oskarwiedeweg.cloudwork.auth.dto.SSOLogin;
 import com.oskarwiedeweg.cloudwork.auth.sso.SSOService;
 import com.oskarwiedeweg.cloudwork.user.dto.SettingsDto;
@@ -9,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -35,6 +37,18 @@ public class UserController {
     @PreAuthorize("isAuthenticated()")
     public void addProvider(@PathVariable("provider") String provider, @AuthenticationPrincipal Long userId, @RequestBody SSOLogin ssoLogin) {
         ssoService.addSSOProvider(userId, provider, ssoLogin);
+    }
+
+    @DeleteMapping("/sso/remove/{providerId}")
+    @PreAuthorize("isAuthenticated()")
+    public void removeProvider(@AuthenticationPrincipal Long userId, @PathVariable Long providerId) {
+        ssoService.removeSSOProvider(userId, providerId);
+    }
+
+    @GetMapping("/sso")
+    @PreAuthorize("isAuthenticated()")
+    public List<SSOConnectionDto> getProviders(@AuthenticationPrincipal Long userId) {
+        return ssoService.getAllFromUser(userId);
     }
 
     @GetMapping("/settings")

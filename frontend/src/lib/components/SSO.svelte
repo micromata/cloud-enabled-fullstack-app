@@ -32,8 +32,9 @@
         if (action === "settings") {
             url += "&settings";
         }
-        console.log(url);
-        goto(url)
+        goto(url, {
+            invalidateAll: true
+        })
     }
 
     let gitHubRedirectURL = ($page.url.origin + "/sso/github") + (action === "settings" ? "?settings" : "");

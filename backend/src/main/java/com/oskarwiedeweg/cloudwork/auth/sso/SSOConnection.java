@@ -9,6 +9,7 @@ public class SSOConnection {
     private final Long id;
     private final String accountId;
     private final String provider;
+    private final String email;
     private final User user;
 
 }
