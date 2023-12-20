@@ -22,6 +22,13 @@
         modalOpen = !modalOpen;
     }
 
+    function confirmDisable2FA() {
+        const isConfirmed = window.confirm("Are you sure you want to disable 2FA?");
+        if (isConfirmed) {
+            // Hier können Sie die Logik für die Deaktivierung von 2FA einfügen
+            console.log("2FA disabled!");
+        }
+    }
     export let data;
     export let form;
 
@@ -63,7 +70,6 @@
                     </button>
                 </div>
             {/if}
-
 
             <!-- Modal Confirm deactivate 2fa -->
             {#if modalOpen}

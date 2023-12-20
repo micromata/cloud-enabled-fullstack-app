@@ -6,7 +6,6 @@
 
     export let data;
     export let alert:boolean = false;
-
     function flipFlopAlert() {
         alert = !alert;
     }
@@ -52,6 +51,7 @@
             {/each}
         </div>
     </div>
+
 </main>
 
 
