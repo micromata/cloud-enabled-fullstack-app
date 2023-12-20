@@ -51,9 +51,7 @@
                 </div>
             {/each}
         </div>
-
     </div>
-
 </main>
 
 

@@ -2,10 +2,18 @@
     import {auth} from "$lib/user";
     import img from '$lib/assets/EmployeePictogram.png';
     import {getGreeting} from '$lib/getGreeting'
+    import Modal from "$lib/components/Modal.svelte";
     import SSO from "$lib/components/SSO.svelte";
     import {page} from "$app/stores";
     import {ssoProviderMap} from "$lib/ssoProviderMap";
     import Modal from "$lib/components/Modal.svelte";
+
+    let modalOpen: boolean = false;
+    let isDeactivateConfirmed: boolean | null = null;
+
+    function confirmDisable2FA() {
+        modalOpen = !modalOpen;
+    }
 
     let modalOpen: boolean = false;
     let isDeactivateConfirmed: boolean | null = null;
@@ -19,6 +27,7 @@
 
     $: hasSSOProviders = data.ssoProviders && data.ssoProviders.length !== 0;
 </script>
+
 
 <div class="flex flex-col gap-8 items-center justify-center h-screen pb-20">
     <div class="w-full max-w-md bg-white shadow-md rounded-md p-6">
