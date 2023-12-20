@@ -26,6 +26,24 @@ export const load: ServerLoad = async ({fetch, locals}) => {
     if (activeSettings.includes("TWO_FACTOR_AUTH")) {
         return {value: true, ssoProviders};
     }
+}
+
+
+export const actions:Actions = { default: async ({fetch, locals}) => {
+
+
+        const token = locals.token;
+
+        const response = await fetch(env.PUBLIC_BACKEND_URL + 'v1/user/2fa/disable', {
+            method: 'delete',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        if(!response.ok) {
+            return {error: "Unexpected Error"};
+        }
 
     return {ssoProviders};
 }
