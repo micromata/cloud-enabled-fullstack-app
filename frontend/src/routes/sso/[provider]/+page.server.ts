@@ -1,26 +1,66 @@
-import type {PageServerLoad} from "./$types";
+import type {PageServerLoad, PageServerLoadEvent} from "./$types";
 import {redirect} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
 import {setCookie} from "$lib/setCookie";
 
-export const load: PageServerLoad = async ({locals, params, url, fetch, cookies}) => {
-    const provider = params.provider;
+export const load: PageServerLoad = async (event) => {
+    if (event.url.searchParams.has("settings")) {
+        await addProvider(event);
+    } else {
+        await ssoLogin(event);
+    }
 
-    if (provider !== "github") {
+}
+
+async function addProvider ({locals, params, url}: PageServerLoadEvent) {
+    if (!locals.token) {
         throw redirect(302, "/login");
     }
 
-    const response = await fetch(env.PUBLIC_BACKEND_URL + `v1/auth/sso/${provider}`, {
+    const provider = params.provider;
+
+    const idToken = url.searchParams.get("code");
+
+    const response = await fetch(env.PUBLIC_BACKEND_URL + `v1/user/sso/new/${provider}`, {
         method: "POST",
-        body: JSON.stringify({idToken: url.searchParams.get("code")}),
+        body: JSON.stringify({idToken}),
         headers: {
-            'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization': `Bearer ${locals.token}`
         }
     });
 
     if (!response.ok) {
-        throw redirect(302, `/login?error=${(await response.json()).error}`);
+        let error = "An unknown error occurred.";
+        if (response.status === 409) {
+            error = "This SSO Account is already linked to a profile";
+        } else if (response.status === 401) {
+            error = "Invalid session! Try again.";
+        }
+        throw redirect(302, `/settings?sso_error=${error}`);
+    }
+
+    throw redirect(302, "/settings?sso_success")
+}
+
+async function ssoLogin({params, url, fetch, cookies}: PageServerLoadEvent) {
+    const provider = params.provider;
+
+    const idToken = url.searchParams.get("code");
+
+    const response = await fetch(env.PUBLIC_BACKEND_URL + `v1/auth/sso/${provider}`, {
+        method: "POST",
+        body: JSON.stringify({idToken}),
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        let error = (await response.json()).error;
+        throw redirect(302, `/login?error=${JSON.stringify(error)}`);
     }
 
     await setCookie(response, cookies)
