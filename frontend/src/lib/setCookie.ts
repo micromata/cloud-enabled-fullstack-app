@@ -1,5 +1,6 @@
-import {error, fail, redirect} from "@sveltejs/kit";
-import type { Cookies } from "@sveltejs/kit";
+import type {Cookies} from "@sveltejs/kit";
+import {error, redirect} from "@sveltejs/kit";
+
 export async function setCookie(response: Response, cookies: Cookies) {
 
     if (!response.ok) {
@@ -18,11 +19,11 @@ export async function setCookie(response: Response, cookies: Cookies) {
     expirationDateShort.setTime(expirationDateShort.getTime() + 60 * 60 * 1000);
 
     if(authToken !== null) {
-        cookies.set('authToken', authToken, {expires: expirationDate, httpOnly: true});
+        cookies.set('authToken', authToken, {expires: expirationDate, httpOnly: true, path: "/"});
     }
 
     if(tempAuthKey !== null) {
-        cookies.set('tempToken', tempAuthKey, {expires: expirationDateShort,httpOnly: true})
+        cookies.set('tempToken', tempAuthKey, {expires: expirationDateShort,httpOnly: true, path: "/"})
     }
 
     if(needsTwoFa === true)
