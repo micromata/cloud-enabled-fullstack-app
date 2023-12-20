@@ -44,9 +44,9 @@ class FeedServiceTest {
                 .id(2L)
                 .build();
 
-        Post post1 = new Post(1L, "Test", "Test", LocalDateTime.now(), testUser1);
-        Post post2 = new Post(2L, "Tes1", "Test", LocalDateTime.now(), testUser1);
-        Post post3 = new Post(3L, "Tes2", "Test", LocalDateTime.now(), testUser2);
+        Post post1 = new Post(1L, "Test", "Wow", "Test", "Image", LocalDateTime.now(), testUser1);
+        Post post2 = new Post(2L, "Tes1", "Wow", "Test", "Image", LocalDateTime.now(), testUser1);
+        Post post3 = new Post(3L, "Tes2", "Wow", "Test", "Image", LocalDateTime.now(), testUser2);
 
         List<Post> posts = List.of(post1, post2, post3);
 
@@ -75,45 +75,45 @@ class FeedServiceTest {
     @Test
     public void testCreatePost() {
         //given
-        CreatePostDto createPostDto = new CreatePostDto("title", "description");
+        CreatePostDto createPostDto = new CreatePostDto("title", "preview", "description", "image");
         Long userId = new Random().nextLong();
 
         //then
         underTest.createPost(userId, createPostDto);
 
-        verify(postDao).savePost(userId, createPostDto.getTitle(), createPostDto.getDescription());
+        verify(postDao).savePost(userId, createPostDto.getTitle(), createPostDto.getPreview(), createPostDto.getDescription(), createPostDto.getImage());
     }
 
     @Test
     public void testSuccessfulUpdatePost() {
         //given
-        CreatePostDto createPostDto = new CreatePostDto("title", "description");
+        CreatePostDto createPostDto = new CreatePostDto("title", "preview", "description", "image");
         Long postId = new Random().nextLong();
 
         //when
-        when(postDao.updatePost(postId, createPostDto.getTitle(), createPostDto.getDescription())).thenReturn(true);
+        when(postDao.updatePost(postId, createPostDto.getTitle(), createPostDto.getPreview(), createPostDto.getDescription(), createPostDto.getImage())).thenReturn(true);
 
         //then
         underTest.updatePost(postId, createPostDto);
 
-        verify(postDao).updatePost(postId, createPostDto.getTitle(), createPostDto.getDescription());
+        verify(postDao).updatePost(postId, createPostDto.getTitle(), createPostDto.getPreview(), createPostDto.getDescription(), createPostDto.getImage());
     }
 
     @Test
     public void testInvalidUpdatePost() {
         //given
-        CreatePostDto createPostDto = new CreatePostDto("title", "description");
+        CreatePostDto createPostDto = new CreatePostDto("title", "preview", "description", "image");
         Long postId = new Random().nextLong();
 
         //when
-        when(postDao.updatePost(postId, createPostDto.getTitle(), createPostDto.getDescription())).thenReturn(false);
+        when(postDao.updatePost(postId, createPostDto.getTitle(), createPostDto.getPreview(), createPostDto.getDescription(), createPostDto.getImage())).thenReturn(false);
 
         //then
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> underTest.updatePost(postId, createPostDto));
 
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
 
-        verify(postDao).updatePost(postId, createPostDto.getTitle(), createPostDto.getDescription());
+        verify(postDao).updatePost(postId, createPostDto.getTitle(), createPostDto.getPreview(), createPostDto.getDescription(), createPostDto.getImage());
     }
 
     @Test
