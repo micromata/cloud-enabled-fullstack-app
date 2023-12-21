@@ -3,8 +3,6 @@
 
     export let data;
 
-    console.log(data.posts);
-
 </script>
 
 <div class="flex items-center justify-center h-screen">
