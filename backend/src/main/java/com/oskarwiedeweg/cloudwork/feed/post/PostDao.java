@@ -47,4 +47,12 @@ public class PostDao {
                 postId
         ) == 1;
     }
+
+    public boolean updatePostState(Long postId, String state) {
+        return jdbcTemplate.update("update posts set state = ? where id = ?", state, postId) == 1;
+    }
+
+    public String getPostState(Long postId) {
+        return jdbcTemplate.queryForObject("select posts.state from posts where posts.id = ?", (rs, rn) -> rs.getString("state"), postId);
+    }
 }
