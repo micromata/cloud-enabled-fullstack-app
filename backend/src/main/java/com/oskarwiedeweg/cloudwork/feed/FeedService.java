@@ -43,17 +43,6 @@ public class FeedService {
         return new FeedDto(posts, users);
     }
 
-    public FeedDto getFeedById(Long postId) {
-        Map<Long, UserDto> users = new HashMap<>();
-        List<PostDto> posts = postDao.getPosts().stream()
-                .filter(post -> post.getId().equals(postId))
-                .peek(post -> users.put(post.getUser().getId(), modelMapper.map(post.getUser(), UserDto.class)))
-                .map(post -> modelMapper.map(post, PostDto.class))
-                .toList();
-
-        return new FeedDto(posts, users);
-    }
-
     public void createPost(Long userId, CreatePostDto body) {
         postDao.savePost(userId,
                 body.getTitle(),
