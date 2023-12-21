@@ -1,19 +1,9 @@
-<!-- BlogList.svelte -->
-
-<script>
-    import { onMount } from 'svelte';
+<script lang="ts">
     import DropDownMyBlogs from "$lib/components/DropDownMyBlogs.svelte";
 
     export let data;
 
-    let publicBlogs = [];
-    let draftBlogs = [];
-
-    onMount(() => {
-        // Filtere Blogs nach Status
-        publicBlogs = data.filter(blog => blog.status === 'public');
-        draftBlogs = data.filter(blog => blog.status === 'draft');
-    });
+    console.log(data.posts);
 
 </script>
 
@@ -23,13 +13,15 @@
             <div class="w-1/2 p-4">
                 <h2 class="text-2xl font-bold mb-4">Public Blogs</h2>
                 <div class="border border-gray-300 p-4 overflow-y-auto rounded-md">
-                    {#each publicBlogs as blog (blog.id)}
-                        <div class="flex bg-blue-500 text-white my-auto p-2 mb-2 rounded-full">
-                            <div class="my-auto ml-2">
-                                {blog.title}
+                    {#each data.posts as blog (blog.id)}
+                        {#if blog.state === 'public'}
+                            <div class="flex bg-blue-500 text-white my-auto p-2 mb-2 rounded-full">
+                                <div class="my-auto ml-2">
+                                    {blog.title}
+                                </div>
+                                <DropDownMyBlogs id={blog.id} />
                             </div>
-                            <DropDownMyBlogs id={blog.id} />
-                        </div>
+                        {/if}
                     {/each}
                 </div>
             </div>
@@ -37,13 +29,15 @@
             <div class="w-1/2 p-4">
                 <h2 class="text-2xl font-bold mb-4">Draft Blogs</h2>
                 <div class="border border-gray-300 p-4 overflow-y-auto rounded-md">
-                    {#each draftBlogs as blog (blog.id)}
-                        <div class="flex bg-gray-500 text-white my-auto p-2 mb-2 rounded-full">
-                            <div class="my-auto ml-2">
-                                {blog.title}
+                    {#each data.posts as blog (blog.id)}
+                        {#if blog.state === 'draft'}
+                            <div class="flex bg-gray-500 text-white my-auto p-2 mb-2 rounded-full">
+                                <div class="my-auto ml-2">
+                                    {blog.title}
+                                </div>
+                                <DropDownMyBlogs id={blog.id} />
                             </div>
-                            <DropDownMyBlogs id={blog.id} />
-                        </div>
+                        {/if}
                     {/each}
                 </div>
             </div>

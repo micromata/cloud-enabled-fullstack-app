@@ -8,9 +8,6 @@ export const load: PageServerLoad = async ({fetch, url}) => {
         method: "GET"
     });
     const responseData = await response.json()
-    console.log(responseData);
 
     return await responseData;
-
-
 }

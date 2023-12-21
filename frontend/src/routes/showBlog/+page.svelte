@@ -6,7 +6,7 @@
 
     let selectedPost: any;
 
-    $: selectedPost = data.posts[0]
+    $: selectedPost = data
 
     console.log(selectedPost);
 </script>

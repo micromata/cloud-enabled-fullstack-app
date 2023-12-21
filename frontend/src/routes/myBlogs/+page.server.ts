@@ -24,10 +24,14 @@ export const actions:Actions = {
     }
 }
 
-export const load: PageServerLoad = async ({fetch}) => {
-    const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/myFeed", {
-        method: "GET"
-    });
+export const load: PageServerLoad = async ({fetch, locals}) => {
+    const token = locals.token;
 
+    const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/feed/myFeed", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
     return await response.json();
 }
