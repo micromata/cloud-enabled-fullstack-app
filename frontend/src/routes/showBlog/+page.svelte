@@ -6,7 +6,9 @@
 
     let selectedPost: any;
 
-    $: selectedPost = data.posts.find(post => post.id == $page.url.searchParams.get('id'));
+    $: selectedPost = data.posts[0]
+
+    console.log(selectedPost);
 </script>
 
     {#if selectedPost}

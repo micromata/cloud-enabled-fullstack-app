@@ -22,7 +22,9 @@ public class FeedController {
     }
 
     @GetMapping("/{postId}")
-    public FeedDto getSpecificFeed(@PathVariable("postId") long postId) { return feedService.getFeedById(postId); }
+    public FeedDto getSpecificFeed(@PathVariable("postId") long postId) {
+        return feedService.getFeedById(postId);
+    }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
