@@ -3,9 +3,12 @@ package com.oskarwiedeweg.cloudwork.feed;
 import com.oskarwiedeweg.cloudwork.feed.dto.CreatePostDto;
 import com.oskarwiedeweg.cloudwork.feed.dto.FeedDto;
 import com.oskarwiedeweg.cloudwork.feed.dto.PostDto;
+import com.oskarwiedeweg.cloudwork.feed.dto.SinglePostDto;
+import com.oskarwiedeweg.cloudwork.feed.post.Post;
 import com.oskarwiedeweg.cloudwork.feed.post.PostDao;
 import com.oskarwiedeweg.cloudwork.user.UserDto;
 import lombok.Data;
+import lombok.val;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,14 +35,19 @@ public class FeedService {
         return new FeedDto(posts, users);
     }
 
-    public FeedDto getFeedById(Long postId) {
+    public SinglePostDto getFeedById(Long postId) {
+        Post post = postDao.findPostById(postId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found!"));
+
+        return modelMapper.map(post, SinglePostDto.class);
+    }
+
+    public FeedDto getMyFeeds(Long userId){
         Map<Long, UserDto> users = new HashMap<>();
-        List<PostDto> posts = postDao.getPublicPosts().stream()
-                .filter(post -> post.getId().equals(postId))
+        List<PostDto> posts = postDao.getUserPosts(userId).stream()
                 .peek(post -> users.put(post.getUser().getId(), modelMapper.map(post.getUser(), UserDto.class)))
                 .map(post -> modelMapper.map(post, PostDto.class))
                 .toList();
-
         return new FeedDto(posts, users);
     }
 
