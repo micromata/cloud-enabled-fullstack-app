@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import {onDestroy, onMount} from "svelte";
+    import {browser} from "$app/environment";
 
     export let id: number;
-    let isMenuOpen = false;
+    let isMenuOpen;
 
     const toggleMenu = () => {
         isMenuOpen = !isMenuOpen;
@@ -35,10 +36,8 @@
         </button>
     </div>
 
-    {#if isMenuOpen}
-        <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby={`menu-button-${id}`} tabindex="-1">
+        <div class:invisible={!isMenuOpen} class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby={`menu-button-${id}`} tabindex="-1">
             <div class="py-1" role="none">
-                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                 <a href="/editFeed?{id}" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1" id={`menu-item-0-${id}`}>Edit Blog</a>
                 <a href="#" on:click class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1" id={`menu-item-1-${id}`}>Mark as Draft</a>
                 <form action="?/delete" method="post">
@@ -48,5 +47,4 @@
 
             </div>
         </div>
-    {/if}
 </div>
