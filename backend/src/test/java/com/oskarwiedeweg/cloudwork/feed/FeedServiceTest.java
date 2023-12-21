@@ -51,7 +51,7 @@ class FeedServiceTest {
         List<Post> posts = List.of(post1, post2, post3);
 
         //when
-        when(postDao.getPosts()).thenReturn(posts);
+        when(postDao.getPublicPosts()).thenReturn(posts);
 
         //then
         FeedDto feed = underTest.getFeed();
@@ -69,7 +69,7 @@ class FeedServiceTest {
         assertEquals(modelMapper.map(testUser1, UserDto.class), feed.getAuthors().get(testUser1.getId()));
         assertEquals(modelMapper.map(testUser2, UserDto.class), feed.getAuthors().get(testUser2.getId()));
 
-        verify(postDao).getPosts();
+        verify(postDao).getPublicPosts();
     }
 
     @Test

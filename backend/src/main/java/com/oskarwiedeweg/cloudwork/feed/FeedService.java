@@ -24,7 +24,7 @@ public class FeedService {
 
     public FeedDto getFeed() {
         Map<Long, UserDto> users = new HashMap<>();
-        List<PostDto> posts = postDao.getPosts().stream()
+        List<PostDto> posts = postDao.getPublicPosts().stream()
                 .peek(post -> users.put(post.getUser().getId(), modelMapper.map(post.getUser(), UserDto.class)))
                 .map(post -> modelMapper.map(post, PostDto.class))
                 .toList();
@@ -34,7 +34,7 @@ public class FeedService {
 
     public FeedDto getFeedById(Long postId) {
         Map<Long, UserDto> users = new HashMap<>();
-        List<PostDto> posts = postDao.getPosts().stream()
+        List<PostDto> posts = postDao.getPublicPosts().stream()
                 .filter(post -> post.getId().equals(postId))
                 .peek(post -> users.put(post.getUser().getId(), modelMapper.map(post.getUser(), UserDto.class)))
                 .map(post -> modelMapper.map(post, PostDto.class))
