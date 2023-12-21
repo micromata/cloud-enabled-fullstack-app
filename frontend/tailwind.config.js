@@ -5,5 +5,16 @@ export default {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    {
+      pattern: /bg-./
+    },
+    {
+      pattern: /text-./
+    },
+    {
+      pattern: /border-./
+    }
+  ]
 }
 

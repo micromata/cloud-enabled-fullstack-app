@@ -3,7 +3,13 @@ import {env} from "$env/dynamic/public";
 
 export const load: ServerLoad = async ({fetch, locals}) => {
 
+    if(!locals.user){
+        console.log("Access denied!")
+        throw redirect(303, "/login");
+    }
+
     const token = locals.token;
+
 
     const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/user/settings", {
         method: 'GET',
