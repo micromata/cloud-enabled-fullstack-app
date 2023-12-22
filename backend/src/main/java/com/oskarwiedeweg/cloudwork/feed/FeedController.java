@@ -2,6 +2,7 @@ package com.oskarwiedeweg.cloudwork.feed;
 
 import com.oskarwiedeweg.cloudwork.feed.dto.CreatePostDto;
 import com.oskarwiedeweg.cloudwork.feed.dto.FeedDto;
+import com.oskarwiedeweg.cloudwork.feed.dto.SinglePostDto;
 import jakarta.validation.Valid;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,14 @@ public class FeedController {
     }
 
     @GetMapping("/{postId}")
-    public FeedDto getSpecificFeed(@PathVariable("postId") long postId) { return feedService.getFeedById(postId); }
+    public SinglePostDto getSpecificFeed(@PathVariable("postId") long postId) {
+        return feedService.getFeedById(postId);
+    }
+
+    @GetMapping("/myFeed")
+    @PreAuthorize("isAuthenticated()")
+    public FeedDto myFeed(@AuthenticationPrincipal Long userId){
+        return feedService.getMyFeeds(userId);}
 
 
     @PostMapping("/updateState/{postId}")
