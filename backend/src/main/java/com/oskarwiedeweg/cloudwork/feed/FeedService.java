@@ -76,4 +76,13 @@ public class FeedService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post with id '%s' not found!".formatted(postId));
         }
     }
+
+    public void changePostsState(Long postId) {
+        if (postDao.getPostState(postId).equals(Post.PUBLIC_STATE)) {
+            postDao.updatePostState(postId, Post.DRAFT_STATE);
+        }
+        else if(postDao.getPostState(postId).equals(Post.DRAFT_STATE)) {
+            postDao.updatePostState(postId, Post.PUBLIC_STATE);
+        }
+    }
 }

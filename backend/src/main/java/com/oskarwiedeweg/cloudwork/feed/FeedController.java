@@ -32,6 +32,13 @@ public class FeedController {
     public FeedDto myFeed(@AuthenticationPrincipal Long userId){
         return feedService.getMyFeeds(userId);}
 
+
+    @PostMapping("/updateState/{postId}")
+    @PreAuthorize("isAuthenticated()")
+    public void updatePostState(@PathVariable("postId") long postId){
+        feedService.changePostsState(postId);
+    }
+
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("isAuthenticated()")
