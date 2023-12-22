@@ -30,11 +30,11 @@ export const load: ServerLoad = async ({fetch, locals}) => {
 
     const activeSettings = responseValid.activeSettings;
     if (activeSettings.includes("TWO_FACTOR_AUTH")) {
-        return {value: true, ssoProviders};
+        return {value: true, ssoProviders, activeSettings};
     }
 
 
-    return {ssoProviders};
+    return {ssoProviders, activeSettings};
 }
 
 export const actions: Actions = {
