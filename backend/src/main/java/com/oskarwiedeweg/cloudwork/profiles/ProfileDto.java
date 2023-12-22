@@ -15,4 +15,14 @@ public class ProfileDto {
     private String bio;
     private List<PostDto> posts;
 
+    private Stats stats;
+
+    @Data
+    public static class Stats {
+
+        private final int follower;
+        private final int posts;
+
+    }
+
 }

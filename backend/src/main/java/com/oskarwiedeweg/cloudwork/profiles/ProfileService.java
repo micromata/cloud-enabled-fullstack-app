@@ -2,6 +2,7 @@ package com.oskarwiedeweg.cloudwork.profiles;
 
 import com.oskarwiedeweg.cloudwork.feed.FeedService;
 import com.oskarwiedeweg.cloudwork.feed.dto.PostDto;
+import com.oskarwiedeweg.cloudwork.profiles.follower.FollowerService;
 import com.oskarwiedeweg.cloudwork.user.User;
 import com.oskarwiedeweg.cloudwork.user.UserDto;
 import com.oskarwiedeweg.cloudwork.user.UserService;
@@ -19,6 +20,7 @@ public class ProfileService {
 
     private final UserService userService;
     private final FeedService feedService;
+    private final FollowerService followerService;
     private final ModelMapper modelMapper;
 
     public ProfileDto loadProfile(Long userId, Long viewerId) {
@@ -32,6 +34,10 @@ public class ProfileService {
                 .userInfo(modelMapper.map(user, UserDto.class))
                 .bio(user.getBio())
                 .posts(userPosts)
+                .stats(new ProfileDto.Stats(
+                        followerService.getFollowerCount(userId),
+                        userPosts.size())
+                )
                 .build();
     }
 
