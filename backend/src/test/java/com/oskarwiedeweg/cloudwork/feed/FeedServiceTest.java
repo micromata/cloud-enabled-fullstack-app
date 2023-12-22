@@ -44,9 +44,9 @@ class FeedServiceTest {
                 .id(2L)
                 .build();
 
-        Post post1 = new Post(1L, "Test", "Wow", "Test", "Image", LocalDateTime.now(), testUser1);
-        Post post2 = new Post(2L, "Tes1", "Wow", "Test", "Image", LocalDateTime.now(), testUser1);
-        Post post3 = new Post(3L, "Tes2", "Wow", "Test", "Image", LocalDateTime.now(), testUser2);
+        Post post1 = new Post(1L, "Test", "Wow", "Test", "Image", Post.PUBLIC_STATE, LocalDateTime.now(), testUser1);
+        Post post2 = new Post(2L, "Tes1", "Wow", "Test", "Image", Post.PUBLIC_STATE, LocalDateTime.now(), testUser1);
+        Post post3 = new Post(3L, "Tes2", "Wow", "Test", "Image", Post.PUBLIC_STATE, LocalDateTime.now(), testUser2);
 
         List<Post> posts = List.of(post1, post2, post3);
 
