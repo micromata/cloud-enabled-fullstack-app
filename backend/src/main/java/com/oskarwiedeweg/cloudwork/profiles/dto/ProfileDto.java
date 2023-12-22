@@ -13,6 +13,7 @@ public class ProfileDto {
 
     private UserDto userInfo;
     private String bio;
+    private boolean following;
     private List<PostDto> posts;
 
     private Stats stats;

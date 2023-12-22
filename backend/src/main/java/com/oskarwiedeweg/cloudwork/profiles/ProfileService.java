@@ -40,6 +40,7 @@ public class ProfileService {
                         followerService.getFollowerCount(userId),
                         userPosts.size())
                 )
+                .following(followerService.follows(viewerId, userId))
                 .build();
     }
 

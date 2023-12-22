@@ -22,4 +22,8 @@ public class FollowerDao {
     public void deleteFollow(Long userId, Long following) {
         jdbcTemplate.update("delete from user_followers where follower_id = ? and following_id = ?", userId, following);
     }
+
+    public boolean isFollowPresent(Long follower, Long following) {
+        return !jdbcTemplate.query("select * from user_followers where follower_id = ? and following_id = ?", (rs, rn) -> rn, follower, following).isEmpty();
+    }
 }

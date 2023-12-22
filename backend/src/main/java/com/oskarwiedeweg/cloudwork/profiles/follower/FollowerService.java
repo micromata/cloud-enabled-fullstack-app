@@ -15,6 +15,10 @@ public class FollowerService {
 
     public void follow(Long userId, Long following) {
         followerDao.createFollow(userId, following);
+    public boolean follows(Long userId, Long following) {
+        return followerDao.isFollowPresent(userId, following);
+    }
+
     }
 
     public void unfollow(Long userId, Long following) {
