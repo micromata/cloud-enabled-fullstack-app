@@ -1,4 +1,4 @@
-package com.oskarwiedeweg.cloudwork.profiles;
+package com.oskarwiedeweg.cloudwork.profiles.dto;
 
 import com.oskarwiedeweg.cloudwork.feed.dto.PostDto;
 import com.oskarwiedeweg.cloudwork.user.UserDto;

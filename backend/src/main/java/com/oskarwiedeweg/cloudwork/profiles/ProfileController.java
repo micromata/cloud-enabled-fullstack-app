@@ -1,5 +1,7 @@
 package com.oskarwiedeweg.cloudwork.profiles;
 
+import com.oskarwiedeweg.cloudwork.profiles.dto.ProfileDto;
+import com.oskarwiedeweg.cloudwork.profiles.dto.UpdateBioDto;
 import com.oskarwiedeweg.cloudwork.profiles.follower.FollowerService;
 import lombok.Data;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +31,12 @@ public class ProfileController {
     @PreAuthorize("isAuthenticated()")
     public void unfollowUser(@PathVariable Long userId, @AuthenticationPrincipal Long follower) {
         followerService.unfollow(follower, userId);
+    }
+
+    @PutMapping("/bio")
+    @PreAuthorize("isAuthenticated()")
+    public void updateBio(@AuthenticationPrincipal Long userId, @RequestBody UpdateBioDto body) {
+        profileService.updateBio(userId, body);
     }
 
 }

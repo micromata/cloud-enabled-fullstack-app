@@ -2,6 +2,8 @@ package com.oskarwiedeweg.cloudwork.profiles;
 
 import com.oskarwiedeweg.cloudwork.feed.FeedService;
 import com.oskarwiedeweg.cloudwork.feed.dto.PostDto;
+import com.oskarwiedeweg.cloudwork.profiles.dto.ProfileDto;
+import com.oskarwiedeweg.cloudwork.profiles.dto.UpdateBioDto;
 import com.oskarwiedeweg.cloudwork.profiles.follower.FollowerService;
 import com.oskarwiedeweg.cloudwork.user.User;
 import com.oskarwiedeweg.cloudwork.user.UserDto;
@@ -41,4 +43,7 @@ public class ProfileService {
                 .build();
     }
 
+    public void updateBio(Long userId, UpdateBioDto body) {
+        userService.getUserDao().updateUserBio(userId, body.getBio());
+    }
 }
