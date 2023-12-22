@@ -13,4 +13,12 @@ public class FollowerService {
         return followerDao.countFollowers(userId);
     }
 
+    public void follow(Long userId, Long following) {
+        followerDao.createFollow(userId, following);
+    }
+
+    public void unfollow(Long userId, Long following) {
+        followerDao.deleteFollow(userId, following);
+    }
+
 }
