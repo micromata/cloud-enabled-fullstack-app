@@ -13,12 +13,17 @@ public class FollowerService {
         return followerDao.countFollowers(userId);
     }
 
-    public void follow(Long userId, Long following) {
-        followerDao.createFollow(userId, following);
     public boolean follows(Long userId, Long following) {
         return followerDao.isFollowPresent(userId, following);
     }
 
+    public void follow(Long userId, Long followingId) {
+        followerDao.createFollow(userId, followingId);
+
+        User user = userDao.findUserById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User following = userDao.findUserById(followingId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        notificationsService.sendNotification(following, NotificationType.NEW_FOLLOWER, new Object[]{}, new Object[]{user.getName()});
     }
 
     public void unfollow(Long userId, Long following) {
