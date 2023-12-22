@@ -3,6 +3,7 @@
     import {sanitize} from "isomorphic-dompurify";
     import {auth} from "$lib/user";
     import img from "$lib/assets/EditIcon.png"
+    import Input from "$lib/components/Input.svelte";
 
     export let data;
 
@@ -38,5 +39,14 @@
         </div>
     </div>
 {:else}
+    <div class="container bg-white rounded-md mt-5 mx-auto max-w-5xl p-8">
     <p>No blog post found for ID {$page.url.searchParams.get('id')}</p>
+    </div>
 {/if}
+<div class="container bg-white rounded-md mt-5 mx-auto max-w-5xl p-8">
+    <h1 class="text-2xl font-bold pb-2">Comments</h1>
+    <form method="post">
+        <Input label="Your Comment" name="comment" type="longtext"/>
+    </form>
+
+</div>
