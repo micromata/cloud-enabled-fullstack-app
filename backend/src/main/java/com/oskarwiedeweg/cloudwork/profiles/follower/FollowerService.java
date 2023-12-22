@@ -1,13 +1,21 @@
 package com.oskarwiedeweg.cloudwork.profiles.follower;
 
+import com.oskarwiedeweg.cloudwork.notifications.NotificationType;
+import com.oskarwiedeweg.cloudwork.notifications.NotificationsService;
+import com.oskarwiedeweg.cloudwork.user.User;
+import com.oskarwiedeweg.cloudwork.user.UserDao;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Data
 @Service
 public class FollowerService {
 
     private final FollowerDao followerDao;
+    private final UserDao userDao;
+    private final NotificationsService notificationsService;
 
     public int getFollowerCount(Long userId) {
         return followerDao.countFollowers(userId);
