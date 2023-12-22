@@ -21,8 +21,25 @@ export const actions:Actions = {
         if(!response.ok) {
             return {error: "unexpected error"};
         }
+    },
+    changeState: async ({request, fetch, locals}) => {
+        const token = locals.token;
+
+        const data = await request.formData();
+        const blogID = data.get('blogId');
+        const response = await fetch(env.PUBLIC_BACKEND_URL + `v1/feed/updateState/${blogID}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        if(!response.ok) {
+            return {error: "unexpected error"};
+        }
     }
 }
+
 
 export const load: PageServerLoad = async ({fetch, locals}) => {
     const token = locals.token;
@@ -35,3 +52,4 @@ export const load: PageServerLoad = async ({fetch, locals}) => {
     });
     return await response.json();
 }
+
