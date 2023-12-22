@@ -2,6 +2,7 @@
     import Input from "$lib/components/Input.svelte";
     import {browser} from "$app/environment";
     import {onMount} from "svelte";
+    import {sanitize} from "isomorphic-dompurify";
 
     export let form;
     export let data;
@@ -73,7 +74,7 @@
     });
 </script>
 
-<div class="flex items-center justify-center h-screen">
+<div class="flex items-center justify-center">
     <form method="post" class="w-full max-w-2xl bg-white shadow-md rounded-md p-6">
 
         {#if (base64Image) || (data.image !== 'data:image/png;base64,' && data.image)}
@@ -104,7 +105,8 @@
 
         <label class="block text-gray-700 text-sm font-semibold" for="editor">Content</label>
         <div class="mb-3">
-            <div id="editor" bind:this={editor} style="min-height: 10rem;">
+            <div id="editor" bind:this={editor} style="min-height: 10rem">
+                {@html sanitize(data.description)}
             </div>
             <div class="text-right text-sm text-gray-500">{counter}/5000 Characters</div>
         </div>
@@ -129,3 +131,7 @@
 
     </form>
 </div>
+
+<style>
+    @import 'https://cdn.quilljs.com/1.3.6/quill.snow.css';
+</style>

@@ -1,6 +1,5 @@
 import {type Actions, redirect, type ServerLoad} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
-import {redirect} from "@sveltejs/kit";
 
 export const load: ServerLoad = async ({fetch, locals}) => {
 
