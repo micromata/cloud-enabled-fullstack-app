@@ -17,8 +17,19 @@ public class PostDao {
     private final JdbcTemplate jdbcTemplate;
     private final PostRowMapper rowMapper;
 
-    public List<Post> getPosts() {
-        return jdbcTemplate.query("select posts.*, users.name as user_name from posts inner join users on posts.user_id = users.id order by posts.published_at desc", rowMapper);
+    public List<Post> getPublicPosts() {
+        return jdbcTemplate.query("select posts.*, users.name as user_name from posts " +
+                "inner join users on posts.user_id = users.id " +
+                "where posts.state = 'public' " +
+                "order by posts.published_at desc", rowMapper);
+    }
+
+    public List<Post> getUserPosts(Long userId) {
+        return jdbcTemplate.query("select posts.*, users.name as user_name from posts " +
+                "inner join users on posts.user_id = users.id " +
+                "where users.id = ? " +
+                "order by posts.published_at desc",
+                rowMapper, userId);
     }
 
     public void savePost(Long userId, String title, String preview, String description, String image) {

@@ -44,14 +44,14 @@ class FeedServiceTest {
                 .id(2L)
                 .build();
 
-        Post post1 = new Post(1L, "Test", "Wow", "Test", "Image", LocalDateTime.now(), testUser1);
-        Post post2 = new Post(2L, "Tes1", "Wow", "Test", "Image", LocalDateTime.now(), testUser1);
-        Post post3 = new Post(3L, "Tes2", "Wow", "Test", "Image", LocalDateTime.now(), testUser2);
+        Post post1 = new Post(1L, "Test", "Wow", "Test", "Image", Post.PUBLIC_STATE, LocalDateTime.now(), testUser1);
+        Post post2 = new Post(2L, "Tes1", "Wow", "Test", "Image", Post.PUBLIC_STATE, LocalDateTime.now(), testUser1);
+        Post post3 = new Post(3L, "Tes2", "Wow", "Test", "Image", Post.PUBLIC_STATE, LocalDateTime.now(), testUser2);
 
         List<Post> posts = List.of(post1, post2, post3);
 
         //when
-        when(postDao.getPosts()).thenReturn(posts);
+        when(postDao.getPublicPosts()).thenReturn(posts);
 
         //then
         FeedDto feed = underTest.getFeed();
@@ -69,7 +69,7 @@ class FeedServiceTest {
         assertEquals(modelMapper.map(testUser1, UserDto.class), feed.getAuthors().get(testUser1.getId()));
         assertEquals(modelMapper.map(testUser2, UserDto.class), feed.getAuthors().get(testUser2.getId()));
 
-        verify(postDao).getPosts();
+        verify(postDao).getPublicPosts();
     }
 
     @Test

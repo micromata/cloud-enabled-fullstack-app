@@ -7,15 +7,17 @@
     export let errorType: 'requirements' | 'message' = "requirements";
 
     export let value: any = null;
+
+    export let basicValue: string = "";
 </script>
 
 <div class="mb-4">
     <label class="block text-gray-700 text-sm font-semibold mb-2">
         {label}
         {#if type !== "longtext"}
-            <input name={name} class:border-red-600={errors} on:change={e => value = e.target?.value} class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type={type}>
+            <input name={name} value="{basicValue}" class:border-red-600={errors} on:change={e => value = e.target?.value} class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500" type={type}>
         {:else}
-            <textarea name={name} class:border-red-600={errors} on:change={e => value = e.target?.value} rows="10" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"></textarea>
+            <textarea name={name} value="{basicValue}" class:border-red-600={errors} on:change={e => value = e.target?.value} rows="10" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"></textarea>
         {/if}
     </label>
     {#if (errors)}
