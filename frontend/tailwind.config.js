@@ -5,7 +5,7 @@ export default {
     extend: {},
   },
   plugins: [],
-  safelist: [
+  safelist: [/*
     {
       pattern: /bg-./
     },
@@ -14,7 +14,7 @@ export default {
     },
     {
       pattern: /border-./
-    }
+    }*/
   ]
 }
 
