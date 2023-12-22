@@ -64,7 +64,10 @@ public class FeedService {
     }
 
     public void createComment(Long userId, Long postId, CreateCommentDto body) {
-        postDao.saveCommentToPost();
+        postDao.saveCommentToPost(userId,
+                postId,
+                body.getContent()
+        );
     }
 
     public void createPost(Long userId, CreatePostDto body) {
