@@ -1,9 +1,7 @@
 package com.oskarwiedeweg.cloudwork.feed;
 
-import com.oskarwiedeweg.cloudwork.feed.dto.CreatePostDto;
-import com.oskarwiedeweg.cloudwork.feed.dto.FeedDto;
-import com.oskarwiedeweg.cloudwork.feed.dto.PostDto;
-import com.oskarwiedeweg.cloudwork.feed.dto.SinglePostDto;
+import com.oskarwiedeweg.cloudwork.feed.dto.*;
+import com.oskarwiedeweg.cloudwork.feed.post.Comment;
 import com.oskarwiedeweg.cloudwork.feed.post.Post;
 import com.oskarwiedeweg.cloudwork.feed.post.PostDao;
 import com.oskarwiedeweg.cloudwork.user.UserDto;
@@ -39,7 +37,21 @@ public class FeedService {
         Post post = postDao.findPostById(postId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found!"));
 
-        return modelMapper.map(post, SinglePostDto.class);
+        List<CommentPostDto> comments = postDao.getCommentsToPost(postId)
+                .stream()
+                .map(c -> modelMapper.map(c, CommentPostDto.class))
+                .toList();
+
+        return new SinglePostDto(
+                post.getId(),
+                post.getTitle(),
+                post.getPreview(),
+                post.getDescription(),
+                post.getImage(),
+                post.getTimestamp(),
+                modelMapper.map(post.getUser(), UserDto.class),
+                comments
+        );
     }
 
     public FeedDto getMyFeeds(Long userId){
@@ -49,6 +61,10 @@ public class FeedService {
                 .map(post -> modelMapper.map(post, PostDto.class))
                 .toList();
         return new FeedDto(posts, users);
+    }
+
+    public void createComment(Long userId, Long postId, CreateCommentDto body) {
+        postDao.saveCommentToPost();
     }
 
     public void createPost(Long userId, CreatePostDto body) {
