@@ -78,11 +78,11 @@ public class FeedService {
     }
 
     public void changePostsState(Long postId) {
-        if (postDao.getPostState(postId).equals("public")) {
-            postDao.updatePostState(postId, "draft");
+        if (postDao.getPostState(postId).equals(Post.PUBLIC_STATE)) {
+            postDao.updatePostState(postId, Post.DRAFT_STATE);
         }
-        else if(postDao.getPostState(postId).equals("draft")) {
-            postDao.updatePostState(postId, "public");
+        else if(postDao.getPostState(postId).equals(Post.DRAFT_STATE)) {
+            postDao.updatePostState(postId, Post.PUBLIC_STATE);
         }
     }
 }
