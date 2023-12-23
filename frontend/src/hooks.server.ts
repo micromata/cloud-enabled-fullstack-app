@@ -5,10 +5,10 @@ export const handle: Handle = async ({event, resolve}) => {
     let cookies = event.cookies;
     let authToken = cookies.get("authToken");
     if (authToken) {
-        let {username, email} = parseJwt(authToken);
+        let {username, email, sub} = parseJwt(authToken);
 
         event.locals.user = {
-            username, email
+            username, email, id: sub
         }
         event.locals.token = authToken;
     } else {

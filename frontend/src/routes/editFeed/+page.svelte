@@ -1,6 +1,8 @@
 <script lang="ts">
     import Input from "$lib/components/Input.svelte";
     import {browser} from "$app/environment";
+    import {onMount} from "svelte";
+    import {sanitize} from "isomorphic-dompurify";
 
     export let form;
     export let data;
@@ -33,9 +35,46 @@
     const test = async (files) => {
     base64Image = await convertImageToBase64(files[0]);
 }
+
+    let content = "";
+    let counter = 0;
+    let editor;
+    let quill;
+
+    let toolbarOptions = [
+        [{ header: 1 }, { header: 2 }, "blockquote", "link"],
+        ["bold", "italic", "underline", "strike"],
+        [{ list: "ordered" },],
+        [{ align: [] }],
+        ["clean"]
+    ];
+    onMount(async () => {
+        const { default: Quill } = await import("quill");
+
+        Quill.register('modules/counter', function(quill, options) {
+            quill.on('text-change', function() {
+                const innerHTML = quill.root.innerHTML;
+
+                counter = innerHTML.length;
+            });
+        });
+
+        quill = new Quill(editor, {
+            modules: {
+                toolbar: toolbarOptions,
+                counter: true
+            },
+            theme: "snow",
+            placeholder: "Write your story..."
+        });
+
+        quill.on('text-change', (d, s) => {
+            content = quill.root.innerHTML;
+        });
+    });
 </script>
 
-<div class="flex items-center justify-center h-screen">
+<div class="flex items-center justify-center">
     <form method="post" class="w-full max-w-2xl bg-white shadow-md rounded-md p-6">
 
         {#if (base64Image) || (data.image !== 'data:image/png;base64,' && data.image)}
@@ -64,8 +103,24 @@
 
         <Input label="Short Description" type="text" name="shortDescription" basicValue="{data.preview}" errors={form?.error?.preview}/>
 
-        <Input label="Content" type="longtext" name="content" basicValue="{data.description}" errors={form?.error?.description}/>
+        <label class="block text-gray-700 text-sm font-semibold" for="editor">Content</label>
+        <div class="mb-3">
+            <div id="editor" bind:this={editor} style="min-height: 10rem">
+                {@html sanitize(data.description)}
+            </div>
+            <div class="text-right text-sm text-gray-500">{counter}/5000 Characters</div>
+        </div>
 
+        {#if (form?.error?.description)}
+            <div class="text-red-600">
+                <p>The following requirements are not met:</p>
+                <ul class="list-disc px-10">
+                    {#each form?.error?.description as error}
+                        <li>{error}</li>
+                    {/each}
+                </ul>
+            </div>
+        {/if}
 
 
         <input type="hidden" value={base64Image ? "data:image/png;base64," + base64Image : data.image} name="image">
@@ -76,3 +131,7 @@
 
     </form>
 </div>
+
+<style>
+    @import 'https://cdn.quilljs.com/1.3.6/quill.snow.css';
+</style>
