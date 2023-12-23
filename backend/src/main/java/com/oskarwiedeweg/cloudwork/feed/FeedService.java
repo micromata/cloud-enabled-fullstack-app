@@ -6,7 +6,6 @@ import com.oskarwiedeweg.cloudwork.feed.post.Post;
 import com.oskarwiedeweg.cloudwork.feed.post.PostDao;
 import com.oskarwiedeweg.cloudwork.user.UserDto;
 import lombok.Data;
-import lombok.val;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -103,5 +102,12 @@ public class FeedService {
         else if(postDao.getPostState(postId).equals(Post.DRAFT_STATE)) {
             postDao.updatePostState(postId, Post.PUBLIC_STATE);
         }
+    }
+
+    public List<PostDto> getUserPosts(Long userId, boolean allowDrafts) {
+        return postDao.getUserPosts(userId).stream()
+                .filter(post -> allowDrafts || post.getState().equals(Post.PUBLIC_STATE))
+                .map(post -> modelMapper.map(post, PostDto.class))
+                .toList();
     }
 }
