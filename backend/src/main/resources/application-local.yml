@@ -12,3 +12,9 @@ sso:
     clientId: "1000232559307-n4gnukqqpcmiobetmhjn4t98ojvesnui.apps.googleusercontent.com"
   github:
     clientId: "Iv1.8fb52ffcb5732f14"
+#    clientSecret: "" Set as env
+notifications:
+  keys:
+    public: "BIhDSNQxHDSqLgy5oRod-0AVs0HuvsxzubgtZ26HUweOFwT0AnAPd7v9mexrN3RpnETdJyw4w3pXegd_J3wCBco"
+#    private: "" Set as env
+    clientId: "Iv1.8fb52ffcb5732f14"

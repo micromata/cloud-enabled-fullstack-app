@@ -2,6 +2,7 @@ package com.oskarwiedeweg.cloudwork;
 
 import com.oskarwiedeweg.cloudwork.feed.dto.PostDto;
 import com.oskarwiedeweg.cloudwork.feed.post.Post;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.boot.SpringApplication;
@@ -9,10 +10,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import java.security.Security;
+
 @SpringBootApplication
 public class BackendApplication {
 
     public static void main(String[] args) {
+        Security.addProvider(new BouncyCastleProvider());
         SpringApplication.run(BackendApplication.class, args);
     }
 

@@ -24,6 +24,7 @@ public class PostRowMapper implements RowMapper<Post> {
                 resultSet.getString("preview"),
                 resultSet.getString("description"),
                 resultSet.getString("image"),
+                resultSet.getString("state"),
                 publishedAt.toLocalDateTime(),
                 userPrefixedRowMapper.mapRow(resultSet, rowNum)
         );

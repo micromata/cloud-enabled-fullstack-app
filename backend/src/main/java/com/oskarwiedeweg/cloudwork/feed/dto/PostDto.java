@@ -13,5 +13,6 @@ public class PostDto {
     private String image;
     private LocalDateTime timestamp;
     private Long authorId;
+    private String state;
 
 }

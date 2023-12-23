@@ -2,8 +2,23 @@ import {type Actions, redirect, type ServerLoad} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
 
 export const load: ServerLoad = async ({fetch, locals}) => {
+    if(!locals.user){
+        console.log("Access denied!")
+        throw redirect(303, "/login");
+    }
+
+    if(!locals.user){
+        console.log("Access denied!")
+        throw redirect(303, "/login");
+    }
+
+    if(!locals.user){
+        console.log("Access denied!")
+        throw redirect(303, "/login");
+    }
 
     const token = locals.token;
+
 
     const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/user/settings", {
         method: 'GET',
@@ -24,11 +39,11 @@ export const load: ServerLoad = async ({fetch, locals}) => {
 
     const activeSettings = responseValid.activeSettings;
     if (activeSettings.includes("TWO_FACTOR_AUTH")) {
-        return {value: true, ssoProviders};
+        return {value: true, ssoProviders, activeSettings};
     }
 
 
-    return {ssoProviders};
+    return {ssoProviders, activeSettings};
 }
 
 export const actions: Actions = {
@@ -72,6 +87,29 @@ export const actions: Actions = {
 
         if (!response.ok) {
             return {error: "Unexpected Error"};
+        }
+    },
+    activeNotifications: async ({fetch, locals, request}) => {
+        if (!locals.token) {
+            throw redirect(302, "/login");
+        }
+
+        const formData = await request.formData();
+        const body = formData.get("body");
+
+        const response = await fetch(env.PUBLIC_BACKEND_URL + "v1/notifications/subscribe", {
+            method: "POST",
+            body: body,
+            headers: {
+                'Authorization': `Bearer ${locals.token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            return {activateNotifications: {
+                error: "An unexpected error occurred."
+            }}
         }
     }
 }

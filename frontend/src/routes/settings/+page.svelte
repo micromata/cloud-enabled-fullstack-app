@@ -5,6 +5,7 @@
     import SSO from "$lib/components/SSO.svelte";
     import {page} from "$app/stores";
     import {ssoProviderMap} from "$lib/ssoProviderMap";
+    import ActivateNotifications from "$lib/components/ActivateNotifications.svelte";
 
     let modalOpen: boolean = false;
     let isDeactivateConfirmed: boolean | null = null;
@@ -91,7 +92,7 @@
             {/if}
         </div>
     </div>
-    <form class="w-full max-w-md bg-white shadow-md rounded-md p-6">
+    <div class="w-full max-w-md bg-white shadow-md rounded-md p-6">
         <h2 class="font-bold text-2xl">SSO</h2>
         <hr/>
         <div class="mt-3">
@@ -129,5 +130,26 @@
             {/if}
             <SSO type="continue" action="settings"/>
         </div>
+    </div>
+
+    <div class="w-full max-w-md bg-white shadow-md rounded-md p-6">
+        <h2 class="font-bold text-2xl">Notifications</h2>
+        <hr/>
+        <div class="mt-3">
+            <ActivateNotifications activeSettings={data.activeSettings} formResponse={form?.activateNotifications}/>
+        </div>
+    </div>
+
+    <form class="w-full max-w-md bg-white shadow-md rounded-md p-6">
+        <h2 class="font-bold text-2xl">Your Blogs</h2>
+        <hr/>
+        <div class="mt-3">
+            <h3 class="font-semibold mb-1 text-xl">Public</h3>
+            <p class="text-gray-500">None</p>
+            <h3 class="font-semibold mb-1 text-lg">Edit your Blogs</h3>
+            <button class="bg-blue-500 w-full text-white px-4 py-2 rounded disabled:bg-gray-400" onclick="window.location.href='/FASetup';">
+                My Blogs
+            </button>
+
     </form>
 </div>
