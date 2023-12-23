@@ -10,7 +10,6 @@
         alert = !alert;
     }
 </script>
-
 <main class="p-4 relative">
     <div class="max-w-screen-xl mx-auto flex flex-col">
         {#if ($page.url.searchParams.has("created"))}
@@ -50,8 +49,6 @@
             {/each}
         </div>
     </div>
-
-
 </main>
 
 

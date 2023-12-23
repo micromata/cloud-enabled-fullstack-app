@@ -71,7 +71,7 @@
            content = quill.root.innerHTML;
         });
     });
-
+  
 </script>
 
 <div class="flex items-center justify-center h-screen">
