@@ -66,4 +66,8 @@ public class UserDao {
     public void updateUserSettings(Long userId, Long settings) {
         jdbcTemplate.update("update users set settings = ? where id = ?", settings, userId);
     }
+
+    public void updateUserBio(Long userId, String bio) {
+        jdbcTemplate.update("update users set bio = ? where id = ?", bio, userId);
+    }
 }
