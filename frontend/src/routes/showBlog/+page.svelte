@@ -11,7 +11,6 @@
 
     $: selectedPost = data
 
-    $: console.log(selectedPost, $auth.id);
 </script>
 
 {#if selectedPost}
@@ -26,7 +25,7 @@
 
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-4xl font-bold">{selectedPost.title}</h1>
-            {#if selectedPost.user.id == $auth.id}
+            {#if selectedPost.user.id == $auth?.id}
                 <a href="/editFeed?id={selectedPost.id}">
                     <img width="16" src={img} alt="Edit your Feed">
                 </a>
@@ -45,8 +44,18 @@
 {/if}
 <div class="container bg-white rounded-md mt-5 mx-auto max-w-5xl p-8">
     <h1 class="text-2xl font-bold pb-2">Comments</h1>
-    <form method="post">
+    {#each data.comments as comments (comments.id)}
+        <div class="container bg-gray-100 rounded-md shadow mt-2 mb-2 pt-1 pb-1">
+            <p class="ml-2 text-xl">{comments.author.name}:</p>
+            <hr class="mx-2">
+            <p class="ml-3">{comments.content}</p>
+            <p class="ml-2 text-gray-500 text-xs">Date: {new Date(comments.timestamp).toLocaleString()}</p>
+        </div>
+
+        {/each}
+    <form method="post" class="flex flex-col">
         <Input label="Your Comment" name="comment" type="longtext"/>
+        <button class="mt-1 w-md bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none" type="submit">Send!</button>
     </form>
 
 </div>
