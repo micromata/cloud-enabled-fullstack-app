@@ -6,7 +6,7 @@
     export let data;
 </script>
 
-<div class="flex items-center justify-center h-screen pb-80">
+<div class="flex justify-center mt-10">
     <form method="post" class="w-full max-w-md bg-white shadow-md rounded-md p-6">
         <div class="flex items-center mb-4">
             <img src={img} alt="User Icon" class="w-8 h-8 mr-4">

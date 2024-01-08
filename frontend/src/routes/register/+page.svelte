@@ -11,7 +11,7 @@
 </script>
 
 
-<div class="flex items-center pb-80 justify-center h-screen">
+<div class="flex items-center mt-10 justify-center h-screen">
     <form method="post" class="w-full max-w-md bg-white shadow-md rounded-md p-6">
 
         <Input name="username" label="Username" type="text" errors={form?.errors?.username}/>
