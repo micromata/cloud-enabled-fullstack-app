@@ -44,7 +44,6 @@ export const actions:Actions = {
 
 export const load: PageServerLoad = async ({locals}) => {
     if(!locals.user){
-        console.log("Access denied!")
         throw redirect(303, "/login");
     }
 }

@@ -52,7 +52,7 @@ export const actions:Actions = {
             return await response.json();
         }
 
-        throw redirect(303, '/blogs?created');
+        throw redirect(303, '/blogs?edited');
 
     }
 }

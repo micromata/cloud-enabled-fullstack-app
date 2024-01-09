@@ -10,11 +10,12 @@
         alert = !alert;
     }
 </script>
-
 <main class="p-4 relative">
     <div class="max-w-screen-xl mx-auto flex flex-col">
         {#if ($page.url.searchParams.has("created"))}
             <Alert headline="Blog was created successfully!" message="It is now public and anyone can learn from it :)" color="green"/>
+            {:else }
+            <Alert headline="Blog was updated successfully!" message="It is now public and anyone can learn from it :)" color="green"/>
         {/if}
 
         {#if $auth}
@@ -50,8 +51,6 @@
             {/each}
         </div>
     </div>
-
-
 </main>
 
 
