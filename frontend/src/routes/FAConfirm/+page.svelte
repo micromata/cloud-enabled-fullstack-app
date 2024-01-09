@@ -1,7 +1,6 @@
 <script>
     import img from '$lib/assets/SadQrCode.svg'
     import ButtonDone from "$lib/components/ButtonDone.svelte";
-    import ButtonDone from "$lib/components/ButtonDone.svelte";
 
     export let form
 </script>
