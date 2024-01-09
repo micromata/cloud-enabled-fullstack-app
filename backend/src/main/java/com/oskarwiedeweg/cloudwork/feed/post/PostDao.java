@@ -16,6 +16,7 @@ import java.util.Optional;
 public class PostDao {
     private final JdbcTemplate jdbcTemplate;
     private final PostRowMapper rowMapper;
+    private final CommentRowMapper commentRowMapper;
 
     public List<Post> getPublicPosts() {
         return jdbcTemplate.query("select posts.*, users.name as user_name from posts " +
@@ -65,5 +66,14 @@ public class PostDao {
 
     public String getPostState(Long postId) {
         return jdbcTemplate.queryForObject("select posts.state from posts where posts.id = ?", (rs, rn) -> rs.getString("state"), postId);
+    }
+
+    public void saveCommentToPost(Long postId, Long userId, String content) {
+        jdbcTemplate.update("insert into post_comments(user_id, post_id, content, published_at) values (?, ?, ?, ?)", userId, postId, content, Timestamp.valueOf(LocalDateTime.now(Clock.systemUTC())));
+    }
+
+    public List<Comment> getCommentsToPost(Long postId) {
+        return jdbcTemplate.query("select post_comments.*, users.name as user_name from post_comments " +
+                "left join users on users.id = post_comments.id", commentRowMapper);
     }
 }

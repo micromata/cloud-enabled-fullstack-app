@@ -15,4 +15,5 @@ public class User {
     private final LocalDate localDate;
     private final Long settings;
     private final String twoFASecret;
+    private final String bio;
 }

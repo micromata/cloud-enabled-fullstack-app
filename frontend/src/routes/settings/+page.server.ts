@@ -2,7 +2,6 @@ import {type Actions, redirect, type ServerLoad} from "@sveltejs/kit";
 import {env} from "$env/dynamic/public";
 
 export const load: ServerLoad = async ({fetch, locals}) => {
-
     if(!locals.user){
         console.log("Access denied!")
         throw redirect(303, "/login");
@@ -112,6 +111,5 @@ export const actions: Actions = {
                 error: "An unexpected error occurred."
             }}
         }
-
     }
 }

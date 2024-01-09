@@ -28,13 +28,11 @@ public class NotificationsService {
 
     public void sendNotification(User user, NotificationType notificationType, Object[] titleParams, Object[] descriptionParams) {
         if (!BitUtils.hasBit(user.getSettings(), notificationType.getSettingsBit())) {
-            System.out.println("Disabled");
             return;
         }
 
         Subscription subscription = loadUserSubscription(user.getId());
         if (subscription == null) {
-            System.out.println("No");
             return;
         }
 
@@ -49,7 +47,6 @@ public class NotificationsService {
         try {
             Notification notification = new Notification(subscription, payload);
             pushService.send(notification);
-            System.out.println("send");
         } catch (GeneralSecurityException | IOException | JoseException | ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

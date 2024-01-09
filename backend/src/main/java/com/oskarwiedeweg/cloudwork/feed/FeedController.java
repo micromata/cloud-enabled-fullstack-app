@@ -1,5 +1,6 @@
 package com.oskarwiedeweg.cloudwork.feed;
 
+import com.oskarwiedeweg.cloudwork.feed.dto.CreateCommentDto;
 import com.oskarwiedeweg.cloudwork.feed.dto.CreatePostDto;
 import com.oskarwiedeweg.cloudwork.feed.dto.FeedDto;
 import com.oskarwiedeweg.cloudwork.feed.dto.SinglePostDto;
@@ -57,5 +58,12 @@ public class FeedController {
     public void updatePost(@PathVariable("postId") Long postId, @Valid @RequestBody CreatePostDto body) {
         feedService.updatePost(postId, body);
     }
+
+    @PostMapping("/comment/create/{postId}")
+    @PreAuthorize("isAuthenticated()")
+    public void createComment(@AuthenticationPrincipal Long userId, @PathVariable("postId") Long postId, @Valid @RequestBody CreateCommentDto body){
+        feedService.createComment(userId, postId, body);
+    }
+
 
 }

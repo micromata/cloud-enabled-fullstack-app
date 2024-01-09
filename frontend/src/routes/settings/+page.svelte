@@ -56,9 +56,6 @@
                 </div>
             {/if}
 
-
-
-
             <!-- Modal Confirm deactivate 2fa -->
             {#if modalOpen}
                 <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">

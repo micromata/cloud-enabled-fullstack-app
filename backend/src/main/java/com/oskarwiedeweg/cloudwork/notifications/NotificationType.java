@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum NotificationType {
-    TEST(BitUtils.SettingBits.NOTIFICATION_TEST.getBit(), "Das ist ein Test.", "Aber mit Parameter %s");
+    NEW_FOLLOWER(BitUtils.SettingBits.NOTIFICATION_NEW_SUBSCRIBER.getBit(), "New follower!", "%s just subscribed to your profile.");
 
     private final Long settingsBit;
     private final String title;
