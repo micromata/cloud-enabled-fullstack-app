@@ -5,7 +5,7 @@
 </script>
 
 
-<div class="flex items-center pb-80 justify-center h-screen">
+<div class="flex  mt-10 justify-center">
     <div class="w-full max-w-7xl bg-white shadow-md rounded-md p-6">
         {#if $auth}
         <h1 class="text-4xl font-bold mb-8">Welcome, {$auth.username}, To Cosmos Connect!</h1>
